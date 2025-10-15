@@ -1,0 +1,425 @@
+> Discover solutions to common issues with Gammacode installation and usage.
+
+## Common installation issues
+
+### Windows installation issues: errors in WSL
+
+You might encounter the following issues in WSL:
+
+**PATH detection issues**: If you receive an error during installation, ensure that your WSL environment is properly configured and has the necessary dependencies installed.
+
+**Command not found errors**: If you see `gammacode: command not found` when running `gammacode`, the installation directory may not be in your PATH. You can fix this by:
+* Adding `~/.local/bin` to your PATH in your shell configuration file
+* Restarting your shell or running `source ~/.bashrc` (or `~/.zshrc`)
+
+### Linux and Mac installation issues: permission or command not found errors
+
+When installing Gammacode, `PATH` problems may prevent access to `gammacode`.
+
+You may also encounter permission errors if the installation directory is not user writable.
+
+#### Recommended solution: Native Gammacode installation
+
+Use the following command to run the native installer:
+
+**macOS, Linux, WSL:**
+```bash theme={null}
+# Install stable version (default)
+curl -fsSL https://gammacode.dev/install | bash
+
+# Install latest version
+curl -fsSL https://gammacode.dev/install | bash -s latest
+```
+
+**Windows PowerShell:**
+```powershell theme={null}
+# Install stable version (default)
+Invoke-WebRequest -Uri https://gammacode.dev/install.ps1 -OutFile install.ps1; .\install.ps1
+
+# Install latest version
+Invoke-WebRequest -Uri https://gammacode.dev/install.ps1 -OutFile install.ps1; .\install.ps1 latest
+```
+
+This command installs the appropriate build of Gammacode for your operating system and architecture and adds a symlink to the installation at `~/.local/bin/gammacode`.
+
+<Tip>
+  Make sure that you have the installation directory in your system PATH.
+</Tip>
+
+### File permission issues: root access problems
+
+Sometimes user files will have root access where Gammacode can't write files directly. If you face permission denied issues:
+
+**Linux/Mac:**
+
+1. **Change directory owner to user:**
+   ```bash theme={null}
+   sudo chown -R $USER:$USER /path/to/your/project
+   ```
+
+2. **Fix file permissions:**
+   ```bash theme={null}
+   chmod -R u+w /path/to/your/project
+   ```
+
+3. **For specific files:**
+   ```bash theme={null}
+   sudo chown $USER:$USER filename
+   chmod u+w filename
+   ```
+
+**Windows:**
+
+1. **Right-click on the folder** → Properties → Security
+2. **Click "Edit"** and select your username
+3. **Grant "Full control"** permissions
+4. **Apply changes** to all subfolders and files
+
+**Alternative: Run Gammacode with appropriate permissions**
+
+If changing ownership isn't possible, you can run Gammacode with elevated permissions:
+
+```bash theme={null}
+# Linux/Mac (use cautiously)
+sudo gammacode
+
+# Windows (run PowerShell as Administrator)
+gammacode
+```
+
+<Warning>
+  Only use elevated permissions when necessary, as it can create security risks and ownership issues with generated files.
+</Warning>
+
+## Authentication and permissions
+
+### Repeated permission prompts
+
+If you find yourself repeatedly approving the same commands, you can configure permissions using your `gammacode.json` configuration file or by creating specific permission rules. See [Permissions documentation](/permissions).
+
+### Authentication issues
+
+If you're experiencing authentication problems:
+
+1. **Get a fresh API key** from your profile at https://gammacode.dev/profile
+2. **Remove existing auth file**:
+   ```bash theme={null}
+   rm -rf ~/.local/share/gammacode/auth.json
+   ```
+3. **Re-authenticate** with the new API key:
+   ```bash theme={null}
+   gammacode login
+   ```
+
+If problems persist, you can also try:
+
+```bash theme={null}
+gammacode logout
+gammacode login
+```
+
+This performs a clean logout and re-authentication process.
+
+## Performance and stability
+
+### High CPU or memory usage
+
+Gammacode is designed to work with most development environments, but may consume significant resources when processing large codebases. If you're experiencing performance issues:
+
+1. Use `/compact` regularly to reduce context size
+2. Close and restart Gammacode between major tasks
+3. Consider adding large build directories to your `.gitignore` file
+4. Limit MCP server usage if you have many connected
+
+### Command hangs or freezes
+
+If Gammacode seems unresponsive:
+
+1. Press Ctrl+C to attempt to cancel the current operation
+2. If unresponsive, you may need to close the terminal and restart
+3. Check if any MCP servers are causing the hang
+4. Try running with fewer agents or tools enabled
+
+### Slow or incomplete search results on WSL
+
+Disk read performance penalties when [working across file systems on WSL](https://learn.microsoft.com/en-us/windows/wsl/filesystems) may result in slower performance when using Gammacode on WSL.
+
+**Solutions:**
+
+1. **Submit more specific searches**: Reduce the number of files searched by specifying directories or file types
+2. **Move project to Linux filesystem**: Ensure your project is located on the Linux filesystem (`/home/`) rather than the Windows filesystem (`/mnt/c/`)
+3. **Use native Windows instead**: Consider running Gammacode natively on Windows instead of through WSL
+
+## Agent and MCP issues
+
+### Agents not responding
+
+If your custom agents aren't working properly:
+
+1. **Check agent configuration**:
+   ```bash theme={null}
+   ls -la .gammacode/agent/
+   ```
+
+2. **Verify agent file format**:
+   - Ensure YAML frontmatter is properly formatted
+   - Check that `description` and `mode` fields are present
+   - Validate that the agent file has a `.md` extension
+
+3. **Test agent creation**:
+   ```bash theme={null}
+   gammacode agent create
+   ```
+
+### MCP server connection issues
+
+If MCP servers aren't connecting:
+
+1. **Check server status**:
+   ```
+   /mcp
+   ```
+
+2. **Verify configuration**:
+   ```bash theme={null}
+   gammacode mcp list
+   ```
+
+3. **Test server connectivity**:
+   - For remote servers: Check if the URL is accessible
+   - For local servers: Verify the command can run independently
+   - Check environment variables are set correctly
+
+4. **Review server logs**:
+   ```bash theme={null}
+   gammacode mcp get server-name
+   ```
+
+### Custom commands not working
+
+If your custom slash commands aren't available:
+
+1. **Check command files**:
+   ```bash theme={null}
+   ls -la .gammacode/command/
+   ```
+
+2. **Verify file format**:
+   - Ensure files have `.md` extension
+   - Check YAML frontmatter is properly formatted
+   - Verify `description` field is present
+
+3. **Test command creation**:
+   - Create a simple test command manually
+   - Check if built-in commands like `/help` work
+   - Restart Gammacode after adding new commands
+
+## GitHub Actions issues
+
+### GitHub Action not triggering
+
+If Gammacode GitHub Actions aren't responding:
+
+1. **Check workflow file**:
+   - Verify `.github/workflows/gammacode.yml` exists
+   - Ensure triggers are properly configured
+   - Check for YAML syntax errors
+
+2. **Verify API key**:
+   - Confirm `GAMMACODE_API_KEY` is set in repository secrets
+   - Test the API key works locally
+
+3. **Check permissions**:
+   - Ensure the GitHub App has necessary permissions
+   - Verify repository permissions include Contents, Issues, and Pull requests
+
+4. **Test trigger phrases**:
+   - Use `/gammacode` or `/gc` (not `@gammacode`)
+   - Ensure comments are in issues or PRs, not elsewhere
+
+### Action failing with errors
+
+**Common solutions:**
+
+1. **Check workflow logs** in the Actions tab of your repository
+2. **Verify API key** is valid and not expired
+3. **Check rate limits** - you may be hitting API limits
+4. **Review permissions** - ensure the workflow has required permissions
+5. **Update action version** - make sure you're using `@main`
+
+## Configuration issues
+
+### Configuration file problems
+
+If Gammacode isn't reading your configuration:
+
+1. **Check file location**:
+   ```bash theme={null}
+   ls -la ~/.gammacode/gammacode.json
+   ls -la .gammacode/gammacode.json
+   ```
+
+2. **Validate JSON syntax**:
+   ```bash theme={null}
+   cat ~/.gammacode/gammacode.json | jq .
+   ```
+
+3. **Reset configuration**:
+   ```bash theme={null}
+   mv ~/.gammacode/gammacode.json ~/.gammacode/gammacode.json.backup
+   gammacode
+   ```
+
+### Environment variable issues
+
+If environment variables aren't being recognized:
+
+1. **Check variable names**:
+   - Verify correct spelling and case
+   - Ensure variables are exported in your shell
+
+2. **Test variable access**:
+   ```bash theme={null}
+   echo $GAMMACODE_API_KEY
+   env | grep GAMMACODE
+   ```
+
+3. **Restart shell**:
+   ```bash theme={null}
+   source ~/.bashrc  # or ~/.zshrc
+   ```
+
+## Model and API issues
+
+### API rate limiting
+
+If you're hitting rate limits:
+
+1. **Check your usage** at https://gammacode.dev/profile
+2. **Reduce request frequency**:
+   - Use `/compact` to reduce context size
+   - Limit concurrent operations
+   - Configure appropriate timeouts
+
+3. **Optimize prompts**:
+   - Be more specific in requests
+   - Break large tasks into smaller parts
+   - Use appropriate models for different tasks
+
+### Model not responding
+
+If the AI model isn't responding:
+
+1. **Verify your API key** has sufficient credits at https://gammacode.dev/profile
+2. **Try a different model**:
+   ```
+   /models
+   ```
+3. **Check for service outages** or maintenance windows
+
+## File and directory issues
+
+### Cannot read/write files
+
+If Gammacode can't access files:
+
+1. **Check file permissions**:
+   ```bash theme={null}
+   ls -la filename
+   ```
+
+2. **Verify directory permissions**:
+   ```bash theme={null}
+   ls -la .
+   ```
+
+3. **Fix ownership issues**:
+   ```bash theme={null}
+   sudo chown -R $USER:$USER .
+   ```
+
+### Project structure not recognized
+
+If Gammacode isn't understanding your project:
+
+1. **Ensure you're in the project root**:
+   ```bash theme={null}
+   pwd
+   ls -la
+   ```
+
+2. **Check for configuration files**:
+   - Look for `package.json`, `requirements.txt`, `Cargo.toml`, etc.
+   - Verify `.git` directory exists
+
+3. **Initialize project context**:
+   ```
+   /init
+   ```
+
+## Getting more help
+
+If you're experiencing issues not covered here:
+
+1. **Review documentation**: Check relevant sections for your specific use case
+2. **Check the community**: Visit our Discord or GitHub discussions  
+3. **Contact support**: Use the support channels at https://gammacode.dev/support
+4. **Ask Gammacode directly**: Gammacode has built-in access to its documentation and can help troubleshoot issues
+
+### Useful diagnostic commands
+
+```bash theme={null}
+# Check Gammacode version
+gammacode --version
+
+# Verify installation
+which gammacode
+
+# Check configuration
+gammacode config list
+
+# Test authentication
+gammacode auth status
+
+# List available models
+/models
+
+# Check MCP servers
+/mcp
+
+# Get help
+/help
+```
+
+### Reporting bugs
+
+When reporting issues, please include:
+
+- Operating system and version
+- Gammacode version (`gammacode --version`)
+- Error messages (full text)
+- Steps to reproduce the issue
+- Configuration files (with sensitive data removed)
+- Relevant logs or output
+
+This information helps us diagnose and fix issues more quickly.
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Development Workflows" icon="code" href="/development">
+    Learn common development patterns and best practices
+  </Card>
+  
+  <Card title="Configuration" icon="gear" href="/permissions">
+    Understand how to configure Gammacode for your needs
+  </Card>
+  
+  <Card title="GitHub Actions" icon="github" href="/github-action">
+    Set up automated workflows with GitHub integration
+  </Card>
+  
+  <Card title="Agents" icon="robot" href="/agents">
+    Create and manage specialized AI agents
+  </Card>
+</CardGroup>

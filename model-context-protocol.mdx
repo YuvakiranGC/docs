@@ -1,0 +1,570 @@
+> Connect Gammacode to tools via MCP and extend your development capabilities.
+
+Gammacode can connect to hundreds of external tools and data sources through the [Model Context Protocol (MCP)](https://modelcontextprotocol.io/introduction), an open-source standard for AI-tool integrations. MCP servers give Gammacode access to your tools, databases, and APIs.
+
+## What you can do with MCP
+
+With MCP servers connected, you can ask Gammacode to:
+
+* **Implement features from issue trackers**: "Add the feature described in JIRA issue ENG-4521 and create a PR on GitHub."
+* **Analyze monitoring data**: "Check Sentry and Statsig to check the usage of the feature described in ENG-4521."
+* **Query databases**: "Find emails of 10 random users who used feature ENG-4521, based on our Postgres database."
+* **Integrate designs**: "Update our standard email template based on the new Figma designs that were posted in Slack"
+* **Automate workflows**: "Create Gmail drafts inviting these 10 users to a feedback session about the new feature."
+
+## Popular MCP servers
+
+Here are some commonly used MCP servers you can connect to Gammacode:
+
+<Warning>
+  Use third party MCP servers at your own risk - we have not verified the correctness or security of all these servers. Make sure you trust MCP servers you are installing. Be especially careful when using MCP servers that could fetch untrusted content, as these can expose you to prompt injection risk.
+</Warning>
+
+### Development & Testing Tools
+
+**Sentry** - Monitor errors, debug production issues
+- Documentation: https://docs.sentry.io/product/sentry-mcp/
+- URL: `https://mcp.sentry.dev/mcp`
+- Authentication: OAuth
+
+**Socket** - Security analysis for dependencies
+- Documentation: https://github.com/SocketDev/socket-mcp
+- URL: `https://mcp.socket.dev/`
+- Authentication: OAuth
+
+**Hugging Face** - Access to Hugging Face Hub information and Gradio AI Applications
+- Documentation: https://huggingface.co/settings/mcp
+- URL: `https://huggingface.co/mcp`
+- Authentication: OAuth
+
+**Jam** - Debug faster with AI agents that can access Jam recordings like video, console logs, network requests, and errors
+- Documentation: https://jam.dev/docs/debug-a-jam/mcp
+- URL: `https://mcp.jam.dev/mcp`
+- Authentication: OAuth
+
+### Project Management & Documentation
+
+**Notion** - Read docs, update pages, manage tasks
+- Documentation: https://developers.notion.com/docs/mcp
+- URL: `https://mcp.notion.com/mcp`
+- Authentication: OAuth
+
+**Linear** - Integrate with Linear's issue tracking and project management
+- Documentation: https://linear.app/docs/mcp
+- URL: `https://mcp.linear.app/mcp`
+- Authentication: OAuth
+
+**Atlassian** - Manage your Jira tickets and Confluence docs
+- Documentation: https://www.atlassian.com/platform/remote-mcp-server
+- URL: `https://mcp.atlassian.com/v1/sse`
+- Authentication: OAuth
+
+**Asana** - Interact with your Asana workspace to keep projects on track
+- Documentation: https://developers.asana.com/docs/using-asanas-model-control-protocol-mcp-server
+- URL: `https://mcp.asana.com/sse`
+- Authentication: OAuth
+
+**Monday** - Manage monday.com boards by creating items, updating columns, assigning owners
+- Documentation: https://developer.monday.com/apps/docs/mondaycom-mcp-integration
+- URL: `https://mcp.monday.com/sse`
+- Authentication: OAuth
+
+### Design & Media
+
+**Figma** - Generate better code by bringing in full Figma context
+- Documentation: https://developers.figma.com
+- URL: `https://mcp.figma.com/mcp`
+
+**Canva** - Browse, summarize, autofill, and even generate new Canva designs directly from Claude
+- Documentation: https://www.canva.dev/docs/connect/canva-mcp-server-setup/
+- URL: `https://mcp.canva.com/mcp`
+- Authentication: OAuth
+
+**invideo** - Build video creation capabilities into your applications
+- Documentation: https://invideo.io/ai/mcp
+- URL: `https://mcp.invideo.io/sse`
+- Authentication: OAuth
+
+### Infrastructure & DevOps
+
+**Vercel** - Vercel's official MCP server, allowing you to search and navigate documentation, manage projects and deployments
+- Documentation: https://vercel.com/docs/mcp/vercel-mcp
+- URL: `https://mcp.vercel.com/`
+- Authentication: OAuth
+
+**Netlify** - Create, deploy, and manage websites on Netlify
+- Documentation: https://docs.netlify.com/build/build-with-ai/netlify-mcp-server/
+- URL: `https://netlify-mcp.netlify.app/mcp`
+- Authentication: OAuth
+
+**Cloudflare** - Build applications, analyze traffic, monitor performance, and manage security settings
+- Documentation: https://developers.cloudflare.com/agents/model-context-protocol/mcp-servers-for-cloudflare/
+- Authentication: OAuth
+
+### Payments & Commerce
+
+**Stripe** - Payment processing, subscription management, and financial transactions
+- Documentation: https://docs.stripe.com/mcp
+- URL: `https://mcp.stripe.com`
+- Authentication: OAuth
+
+**PayPal** - Integrate PayPal commerce capabilities, payment processing, transaction management
+- Documentation: https://www.paypal.ai/
+- URL: `https://mcp.paypal.com/mcp`
+- Authentication: OAuth
+
+**Square** - Use an agent to build on Square APIs. Payments, inventory, orders, and more
+- Documentation: https://developer.squareup.com/docs/mcp
+- URL: `https://mcp.squareup.com/sse`
+- Authentication: OAuth
+
+<Note>
+  **Need a specific integration?** [Find hundreds more MCP servers on GitHub](https://github.com/modelcontextprotocol/servers), or build your own using the [MCP SDK](https://modelcontextprotocol.io/quickstart/server).
+</Note>
+
+## Installing MCP servers
+
+MCP servers can be configured in two ways: using the interactive `gammacode mcp add` command or by editing your `gammacode.jsonc` configuration file directly.
+
+### Interactive installation
+
+Use the interactive command to add MCP servers with a guided setup:
+
+```bash theme={null}
+gammacode mcp add
+```
+
+This will prompt you through an interactive flow:
+
+```
+┌  Add MCP server
+│
+◇  Enter MCP server name
+│  asana
+│
+◇  Select MCP server type
+│  Remote
+│
+◇  Enter MCP server URL
+│  https://mcp.asana.com/sse
+```
+
+**MCP server types:**
+- **Remote**: Connect to hosted MCP services via HTTP or SSE URLs
+- **Local**: Run MCP servers as local processes on your machine
+
+### Configuration file setup
+
+You can also configure MCP servers directly in your `gammacode.json` file:
+
+```json theme={null}
+{
+  "mcp": {
+    "asana": {
+      "type": "remote",
+      "url": "https://mcp.asana.com/sse",
+      "enabled": true
+    },
+    "notion": {
+      "type": "remote", 
+      "url": "https://mcp.notion.com/mcp",
+      "enabled": true,
+      "headers": {
+        "Authorization": "Bearer YOUR_TOKEN"
+      }
+    },
+    "local-server": {
+      "type": "local",
+      "command": ["npx", "-y", "@modelcontextprotocol/server-everything"],
+      "enabled": true,
+      "environment": {
+        "API_KEY": "your-api-key"
+      }
+    }
+  }
+}
+```
+
+### Local server configuration
+
+For local MCP servers, you'll need to specify the command and any environment variables:
+
+```json theme={null}
+{
+  "mcp": {
+    "airtable": {
+      "type": "local",
+      "command": ["npx", "-y", "airtable-mcp-server"],
+      "environment": {
+        "AIRTABLE_API_KEY": "YOUR_API_KEY"
+      },
+      "enabled": true
+    },
+    "database": {
+      "type": "local", 
+      "command": ["node", "./scripts/database-mcp-server.js"],
+      "environment": {
+        "DATABASE_URL": "postgresql://user:pass@localhost:5432/db"
+      },
+      "enabled": true
+    }
+  }
+}
+```
+
+### Managing your servers
+
+Once configured, you can manage your MCP servers:
+
+```bash theme={null}
+# List all configured servers
+gammacode mcp list
+
+# Remove a server (interactive)
+gammacode mcp remove
+
+# (within Gammacode) Check server status and authenticate
+/mcp
+```
+
+You can also manage servers by editing your `gammacode.json` file directly to:
+- Add new servers
+- Modify existing server configurations
+- Enable/disable servers by setting `"enabled": true/false`
+- Update URLs, commands, or environment variables
+
+<Tip>
+  Tips:
+  * Configure MCP server startup timeout using the MCP_TIMEOUT environment variable (e.g., `MCP_TIMEOUT=10000 gammacode` sets a 10-second timeout)
+  * Gammacode will display a warning when MCP tool output exceeds 10,000 tokens. To increase this limit, set the `MAX_MCP_OUTPUT_TOKENS` environment variable (e.g., `MAX_MCP_OUTPUT_TOKENS=50000`)
+  * Use `/mcp` within Gammacode to authenticate with remote servers that require OAuth 2.0 authentication
+  * Changes to `gammacode.json` require restarting Gammacode to take effect
+</Tip>
+
+## Configuration locations
+
+MCP servers can be configured in different locations depending on your needs:
+
+### Global configuration
+- **Location**: `~/.gammacode/gammacode.json`
+- **Scope**: Available across all projects
+
+### Project configuration  
+- **Location**: `.gammacode/gammacode.json` (in your project root)
+- **Scope**: Available only in current project
+- **Priority**: Project settings override global settings
+
+### Environment variable expansion
+
+Gammacode supports environment variable expansion in configuration files, allowing you to keep sensitive data secure while sharing configurations.
+
+**Supported syntax:**
+* `${VAR}` - Expands to the value of environment variable `VAR`
+* `${VAR:-default}` - Expands to `VAR` if set, otherwise uses `default`
+
+**Example with environment variables:**
+
+```json theme={null}
+{
+  "mcp": {
+    "api-server": {
+      "type": "remote",
+      "url": "${API_BASE_URL:-https://api.example.com}/mcp",
+      "headers": {
+        "Authorization": "Bearer ${API_KEY}"
+      }
+    },
+    "database": {
+      "type": "local",
+      "command": ["node", "server.js"],
+      "environment": {
+        "DATABASE_URL": "${DATABASE_URL}",
+        "DB_PASSWORD": "${DB_PASSWORD}"
+      }
+    }
+  }
+}
+```
+
+This allows you to:
+- Keep API keys and sensitive data in environment variables
+- Share configuration files safely in version control
+- Use different configurations for development/staging/production
+
+## Practical examples
+
+### Example: Monitor errors with Sentry
+
+```bash theme={null}
+# 1. Add the Sentry MCP server
+gammacode mcp add
+# Follow prompts: name=sentry, type=Remote, url=https://mcp.sentry.dev/mcp
+
+# 2. Use /mcp to authenticate with your Sentry account
+> /mcp
+
+# 3. Debug production issues
+> "What are the most common errors in the last 24 hours?"
+> "Show me the stack trace for error ID abc123"
+> "Which deployment introduced these new errors?"
+```
+
+### Example: Connect to Notion for documentation
+
+```bash theme={null}
+# 1. Add the Notion MCP server
+gammacode mcp add
+# Follow prompts: name=notion, type=Remote, url=https://mcp.notion.com/mcp
+
+# 2. In Gammacode, authenticate if needed
+> /mcp
+# Select "Authenticate" for Notion
+
+# 3. Now you can ask Gammacode to work with Notion
+> "Show me all pages in the Engineering workspace"
+> "Create a new page for the API documentation"
+> "Update the project roadmap with this week's progress"
+```
+
+### Example: Add a local database server
+
+For local servers, you can configure them in your `gammacode.json` file:
+
+```json theme={null}
+{
+  "mcp": {
+    "database": {
+      "type": "local",
+      "command": ["npx", "-y", "@bytebase/dbhub"],
+      "environment": {
+        "DATABASE_URL": "postgresql://readonly:pass@localhost:5432/analytics"
+      },
+      "enabled": true
+    }
+  }
+}
+```
+
+Then query your database naturally:
+```
+> "What's our total revenue this month?"
+> "Show me the schema for the orders table"
+> "Find customers who haven't made a purchase in 90 days"
+```
+
+## Authenticate with remote MCP servers
+
+Many cloud-based MCP servers require authentication. Gammacode supports OAuth 2.0 for secure connections.
+
+<Steps>
+  <Step title="Add the server that requires authentication">
+    For example:
+    ```bash theme={null}
+    gammacode mcp add --transport http sentry https://mcp.sentry.dev/mcp
+    ```
+  </Step>
+
+  <Step title="Use the /mcp command within Gammacode">
+    In Gammacode, use the command:
+    ```
+    > /mcp
+    ```
+    Then follow the steps in your browser to login.
+  </Step>
+</Steps>
+
+<Tip>
+  Tips:
+  * Authentication tokens are stored securely and refreshed automatically
+  * Use "Clear authentication" in the `/mcp` menu to revoke access
+  * If your browser doesn't open automatically, copy the provided URL
+  * OAuth authentication works with HTTP servers
+</Tip>
+
+## Advanced MCP server examples
+
+### API server with authentication
+
+```json theme={null}
+{
+  "mcp": {
+    "weather-api": {
+      "type": "remote",
+      "url": "https://api.weather.com/mcp",
+      "headers": {
+        "Authorization": "Bearer YOUR_API_TOKEN",
+        "X-API-Version": "v2"
+      },
+      "enabled": true
+    }
+  }
+}
+```
+
+### Local development server
+
+```json theme={null}
+{
+  "mcp": {
+    "local-dev": {
+      "type": "local",
+      "command": ["python", "./scripts/dev-mcp-server.py"],
+      "environment": {
+        "DEBUG": "true",
+        "PORT": "8080",
+        "CONFIG_PATH": "./config/dev.json"
+      },
+      "enabled": true
+    }
+  }
+}
+```
+
+## Use MCP resources
+
+MCP servers can expose resources that you can reference using @ mentions, similar to how you reference files.
+
+### Reference MCP resources
+
+<Steps>
+  <Step title="List available resources">
+    Type `@` in your prompt to see available resources from all connected MCP servers. Resources appear alongside files in the autocomplete menu.
+  </Step>
+
+  <Step title="Reference a specific resource">
+    Use the format `@server:protocol://resource/path` to reference a resource:
+    ```
+    > Can you analyze @github:issue://123 and suggest a fix?
+    ```
+    ```
+    > Please review the API documentation at @docs:file://api/authentication
+    ```
+  </Step>
+
+  <Step title="Multiple resource references">
+    You can reference multiple resources in a single prompt:
+    ```
+    > Compare @postgres:schema://users with @docs:file://database/user-model
+    ```
+  </Step>
+</Steps>
+
+<Tip>
+  Tips:
+  * Resources are automatically fetched and included as attachments when referenced
+  * Resource paths are fuzzy-searchable in the @ mention autocomplete
+  * Gammacode automatically provides tools to list and read MCP resources when servers support them
+  * Resources can contain any type of content that the MCP server provides (text, JSON, structured data, etc.)
+</Tip>
+
+## Use MCP prompts as slash commands
+
+MCP servers can expose prompts that become available as slash commands in Gammacode.
+
+### Execute MCP prompts
+
+<Steps>
+  <Step title="Discover available prompts">
+    Type `/` to see all available commands, including those from MCP servers. MCP prompts appear with the format `/mcp__servername__promptname`.
+  </Step>
+
+  <Step title="Execute a prompt without arguments">
+    ```
+    > /mcp__github__list_prs
+    ```
+  </Step>
+
+  <Step title="Execute a prompt with arguments">
+    Many prompts accept arguments. Pass them space-separated after the command:
+    ```
+    > /mcp__github__pr_review 456
+    ```
+    ```
+    > /mcp__jira__create_issue "Bug in login flow" high
+    ```
+  </Step>
+</Steps>
+
+<Tip>
+  Tips:
+  * MCP prompts are dynamically discovered from connected servers
+  * Arguments are parsed based on the prompt's defined parameters
+  * Prompt results are injected directly into the conversation
+  * Server and prompt names are normalized (spaces become underscores)
+</Tip>
+
+## Use Gammacode as an MCP server
+
+You can use Gammacode itself as an MCP server that other applications can connect to:
+
+```bash theme={null}
+# Start Gammacode as a stdio MCP server
+gammacode mcp serve
+```
+
+You can use this in other MCP clients by adding this configuration:
+
+```json theme={null}
+{
+  "mcpServers": {
+    "gammacode": {
+      "type": "stdio",
+      "command": "gammacode",
+      "args": ["mcp", "serve"],
+      "env": {}
+    }
+  }
+}
+```
+
+<Tip>
+  Tips:
+  * The server provides access to Gammacode's tools like View, Edit, LS, etc.
+  * In other MCP clients, try asking them to read files in a directory, make edits, and more.
+  * Note that this MCP server is simply exposing Gammacode's tools to your MCP client, so your own client is responsible for implementing user confirmation for individual tool calls.
+</Tip>
+
+## MCP output limits and warnings
+
+When MCP tools produce large outputs, Gammacode helps manage the token usage to prevent overwhelming your conversation context:
+
+* **Output warning threshold**: Gammacode displays a warning when any MCP tool output exceeds 10,000 tokens
+* **Configurable limit**: You can adjust the maximum allowed MCP output tokens using the `MAX_MCP_OUTPUT_TOKENS` environment variable
+* **Default limit**: The default maximum is 25,000 tokens
+
+To increase the limit for tools that produce large outputs:
+
+```bash theme={null}
+# Set a higher limit for MCP tool outputs
+export MAX_MCP_OUTPUT_TOKENS=50000
+gammacode
+```
+
+This is particularly useful when working with MCP servers that:
+* Query large datasets or databases
+* Generate detailed reports or documentation
+* Process extensive log files or debugging information
+
+<Warning>
+  If you frequently encounter output warnings with specific MCP servers, consider increasing the limit or configuring the server to paginate or filter its responses.
+</Warning>
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Agents" icon="robot" href="/agents">
+    Learn how to configure agents with specific MCP tools for specialized workflows
+  </Card>
+  
+  <Card title="Permissions" icon="shield-check" href="/permissions">
+    Control access to MCP tools with granular permission settings
+  </Card>
+  
+  <Card title="Custom Commands" icon="command-line" href="/custom-commands">
+    Create custom commands that leverage MCP tools for repetitive tasks
+  </Card>
+  
+  <Card title="Headless Mode" icon="terminal" href="/headless">
+    Use MCP tools programmatically in automated workflows
+  </Card>
+</CardGroup>

@@ -1,0 +1,427 @@
+> Learn about integrating Gammacode into your development workflow with Gammacode GitHub Actions
+
+Gammacode GitHub Actions brings AI-powered automation to your GitHub workflow. With a simple `/gammacode` or `/gc` mention in any PR or issue comment, Gammacode can analyze your code, create pull requests, implement features, and fix bugs - all while following your project's standards.
+
+<Note>
+  Gammacode GitHub Actions is built on top of the Gammacode platform, which enables programmatic integration of Gammacode into your applications. You can use this to build custom automation workflows beyond GitHub Actions.
+</Note>
+
+## Why use Gammacode GitHub Actions?
+
+* **Instant PR creation**: Describe what you need, and Gammacode creates a complete PR with all necessary changes
+* **Automated code implementation**: Turn issues into working code with a single command
+* **Follows your standards**: Gammacode respects your `AGENTS.md` guidelines and existing code patterns
+* **Simple setup**: Get started in minutes with our installer and API key
+* **Secure by default**: Your code stays on GitHub's runners
+
+## What can Gammacode do?
+
+Gammacode provides a powerful GitHub Action that transforms how you work with code:
+
+### Gammacode GitHub Action
+
+This GitHub Action allows you to run Gammacode within your GitHub Actions workflows. You can use this to build any custom workflow on top of Gammacode.
+
+[View repository →](https://github.com/Zenprenuers/gammacode-github-action)
+
+## Setup
+
+### Quick setup
+
+The easiest way to set up this action is through Gammacode in the terminal. Just open Gammacode and run:
+
+```
+gammacode github install
+```
+
+This command will:
+1. Open the Gammacode GitHub app installation page
+2. Guide you through installing the app to your repository
+3. Automatically create the workflow file in `.github/workflows/gammacode.yml`
+
+<Note>
+  * You must be a repository admin to install the GitHub app and add secrets
+  * The GitHub app will request read & write permissions for Contents, Issues, and Pull requests
+  * You'll need to add your `GAMMACODE_API_KEY` to repository secrets after installation
+</Note>
+
+### Manual setup
+
+If you prefer manual setup, follow these steps:
+
+1. **Install the Gammacode GitHub app** to your repository
+   The Gammacode GitHub app requires the following repository permissions:
+   * **Contents**: Read & write (to modify repository files)
+   * **Issues**: Read & write (to respond to issues)
+   * **Pull requests**: Read & write (to create PRs and push changes)
+
+2. **Add GAMMACODE_API_KEY** to your repository secrets ([Learn how to use secrets in GitHub Actions](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions))
+
+3. **Create the workflow file** at `.github/workflows/gammacode.yml`:
+
+```yaml theme={null}
+name: GammaCode AI Assistant
+
+on:
+  issue_comment:
+    types: [created]
+
+jobs:
+  gammacode:
+    if: contains(github.event.comment.body, '/gammacode') || contains(github.event.comment.body, '/gc')
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: write
+      issues: write
+      pull-requests: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Run GammaCode
+        uses: Zenprenuers/gammacode-github-action@main
+        with:
+          api-key: ${{ secrets.GAMMACODE_API_KEY }}
+          share: true # Optional: share session for debugging
+```
+
+<Tip>
+  After completing either the quickstart or manual setup, test the action by commenting `/gammacode` or `/gc` in an issue or PR!
+</Tip>
+
+## How to use
+
+### Basic usage
+
+Comment on any issue or pull request with `/gammacode` or `/gc` followed by your instructions:
+
+```
+/gammacode implement user authentication using JWT tokens
+```
+
+```
+/gc fix the memory leak in the user service
+```
+
+```
+/gammacode review this PR for security vulnerabilities
+```
+
+### Common use cases
+
+**Feature implementation:**
+```
+/gammacode add password reset functionality to the login system
+/gc implement pagination for the user list component
+```
+
+**Bug fixes:**
+```
+/gammacode fix the null pointer exception in UserController.java
+/gc resolve the CSS layout issue on mobile devices
+```
+
+**Code reviews:**
+```
+/gammacode review this PR and suggest improvements
+/gc check for potential security issues in these changes
+```
+
+**Refactoring:**
+```
+/gammacode refactor this component to use TypeScript
+/gc optimize the database queries in the analytics service
+```
+
+## Configuration
+
+### Basic configuration
+
+The action accepts the following parameters:
+
+| Parameter | Description | Required | Default |
+|-----------|-------------|----------|---------|
+| `api-key` | Your Gammacode API key | Yes | - |
+| `share` | Whether to share session for debugging | No | `false` |
+
+### Advanced configuration
+
+You can customize the workflow triggers and add additional parameters:
+
+```yaml theme={null}
+name: GammaCode AI Assistant
+
+on:
+  issue_comment:
+    types: [created]
+  pull_request_review_comment:
+    types: [created]
+  issues:
+    types: [opened, edited]
+
+jobs:
+  gammacode:
+    if: |
+      contains(github.event.comment.body, '/gammacode') || 
+      contains(github.event.comment.body, '/gc') ||
+      (github.event_name == 'issues' && contains(github.event.issue.body, '/gammacode'))
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: write
+      issues: write
+      pull-requests: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Run GammaCode
+        uses: Zenprenuers/gammacode-github-action@main
+        with:
+          api-key: ${{ secrets.GAMMACODE_API_KEY }}
+          share: true
+        timeout-minutes: 30
+```
+
+### AGENTS.md configuration
+
+Create an `AGENTS.md` file in your repository root to define:
+- Code style guidelines
+- Review criteria
+- Project-specific rules
+- Preferred patterns and frameworks
+
+Example `AGENTS.md`:
+
+```markdown theme={null}
+# Project Guidelines
+
+## Code Style
+- Use TypeScript for all new JavaScript code
+- Follow ESLint configuration
+- Use Prettier for formatting
+- Prefer functional components in React
+
+## Review Criteria
+- All code must have unit tests
+- No console.log statements in production code
+- Use semantic commit messages
+- Ensure accessibility compliance
+
+## Architecture
+- Follow MVC pattern for backend
+- Use Redux for state management
+- Implement proper error handling
+- Use environment variables for configuration
+```
+
+## Best practices
+
+### Security considerations
+
+<Warning>
+  Never commit API keys directly to your repository!
+</Warning>
+
+* **Use GitHub Secrets**: Always store your `GAMMACODE_API_KEY` as a repository secret
+* **Limit permissions**: Grant only necessary permissions to the GitHub app
+* **Review suggestions**: Always review Gammacode's suggestions before merging
+* **Monitor usage**: Keep track of API usage and costs
+
+### Performance optimization
+
+* **Use specific commands**: Be specific in your `/gammacode` requests to reduce processing time
+* **Set timeouts**: Configure appropriate timeouts for your workflows
+* **Limit scope**: Focus on specific files or components when possible
+
+### Cost management
+
+When using Gammacode GitHub Actions, be aware of the associated costs:
+
+**GitHub Actions costs:**
+* Gammacode runs on GitHub-hosted runners, which consume your GitHub Actions minutes
+* See [GitHub's billing documentation](https://docs.github.com/en/billing/managing-billing-for-your-products/managing-billing-for-github-actions/about-billing-for-github-actions)
+
+**API costs:**
+* Each Gammacode interaction consumes API tokens based on the length of prompts and responses
+* Token usage varies by task complexity and codebase size
+
+**Cost optimization tips:**
+* Use specific commands to reduce unnecessary API calls
+* Set appropriate timeouts to avoid runaway jobs  
+* Use GitHub's concurrency controls to limit parallel runs
+* Monitor your API usage regularly
+
+## Examples
+
+### Feature development workflow
+
+1. **Create an issue** describing the feature:
+   ```
+   Add user profile settings page with avatar upload functionality
+   ```
+
+2. **Comment on the issue**:
+   ```
+   /gammacode implement this feature following our React and TypeScript standards
+   ```
+
+3. **Gammacode will**:
+   - Analyze your existing codebase
+   - Create the necessary components
+   - Add proper TypeScript types
+   - Include basic tests
+   - Create a pull request with all changes
+
+### Bug fix workflow
+
+1. **Report a bug** in an issue:
+   ```
+   Users can't upload files larger than 1MB - getting timeout errors
+   ```
+
+2. **Ask Gammacode to investigate**:
+   ```
+   /gc analyze and fix the file upload timeout issue
+   ```
+
+3. **Gammacode will**:
+   - Examine the upload functionality
+   - Identify the root cause
+   - Implement a fix
+   - Add appropriate error handling
+   - Create a pull request with the solution
+
+### Code review workflow
+
+1. **Create a pull request** with your changes
+
+2. **Request a review**:
+   ```
+   /gammacode review this PR for security vulnerabilities and performance issues
+   ```
+
+3. **Gammacode will**:
+   - Analyze all changed files
+   - Check for security vulnerabilities
+   - Identify performance bottlenecks
+   - Suggest improvements
+   - Add review comments to specific lines
+
+## Troubleshooting
+
+### Gammacode not responding to commands
+
+**Check these common issues:**
+
+1. **Workflow file**: Ensure `.github/workflows/gammacode.yml` exists and is correctly configured
+2. **API key**: Verify `GAMMACODE_API_KEY` is set in repository secrets
+3. **Permissions**: Confirm the GitHub app has necessary permissions
+4. **Syntax**: Use `/gammacode` or `/gc` (not `@gammacode`)
+5. **Workflow triggers**: Check that your trigger conditions match the comment event
+
+### Action failing with errors
+
+**Common solutions:**
+
+1. **Check workflow logs** in the Actions tab of your repository
+2. **Verify API key** is valid and not expired
+3. **Check rate limits** - you may be hitting API limits
+4. **Review permissions** - ensure the workflow has required permissions
+5. **Update action version** - make sure you're using the latest version
+
+### Session sharing for debugging
+
+Enable session sharing to debug issues:
+
+```yaml theme={null}
+- name: Run GammaCode
+  uses: Zenprenuers/gammacode-github-action@main
+  with:
+    api-key: ${{ secrets.GAMMACODE_API_KEY }}
+    share: true
+```
+
+This allows you to access the session logs for troubleshooting.
+
+## Advanced usage
+
+### Custom triggers
+
+You can configure custom triggers for different scenarios:
+
+```yaml theme={null}
+on:
+  schedule:
+    - cron: '0 9 * * MON'  # Weekly code review
+  push:
+    branches: [main]       # On main branch pushes
+  pull_request:
+    types: [opened]        # On new PRs
+```
+
+### Multiple workflows
+
+Create separate workflows for different purposes:
+
+**Code Review Workflow** (`.github/workflows/gammacode-review.yml`):
+```yaml theme={null}
+name: GammaCode Code Review
+on:
+  pull_request:
+    types: [opened, synchronize]
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: Zenprenuers/gammacode-github-action@main
+        with:
+          api-key: ${{ secrets.GAMMACODE_API_KEY }}
+          command: "review"
+```
+
+**Feature Implementation Workflow** (`.github/workflows/gammacode-features.yml`):
+```yaml theme={null}
+name: GammaCode Feature Implementation
+on:
+  issue_comment:
+    types: [created]
+jobs:
+  implement:
+    if: contains(github.event.comment.body, '/implement')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: Zenprenuers/gammacode-github-action@main
+        with:
+          api-key: ${{ secrets.GAMMACODE_API_KEY }}
+```
+
+## Migration from other tools
+
+If you're migrating from other AI coding tools, Gammacode offers:
+
+* **Better context understanding**: Analyzes your entire repository structure
+* **Project-aware responses**: Follows your `AGENTS.md` guidelines
+* **Seamless GitHub integration**: Native PR and issue handling
+* **Flexible triggers**: Multiple ways to invoke Gammacode
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Agents" icon="robot" href="/agents">
+    Learn how to create specialized agents for your workflow
+  </Card>
+  
+  <Card title="Custom Commands" icon="command-line" href="/custom-commands">
+    Create reusable commands for common tasks
+  </Card>
+  
+  <Card title="Development Workflows" icon="code" href="/development">
+    Explore common development patterns with Gammacode
+  </Card>
+  
+  <Card title="Troubleshooting" icon="wrench" href="/troubleshooting">
+    Get help with common issues and problems
+  </Card>
+</CardGroup>

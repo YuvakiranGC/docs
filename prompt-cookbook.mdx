@@ -1,0 +1,310 @@
+---
+title: 'Prompt Cookbook'
+description: 'Ready-to-use prompt templates and examples for common development tasks with Gammacode'
+---
+
+> Copy-paste prompt templates and real-world examples to get started quickly with common development tasks.
+
+## Quick Templates
+
+### Code Generation
+
+<CodeGroup>
+```bash React Component
+Create a [ComponentName] React component that [functionality description]. 
+Use TypeScript and include props interface. Follow our existing component patterns in /components/
+```
+
+```bash API Endpoint
+Create a [HTTP_METHOD] /api/[endpoint] endpoint using [framework] that [functionality]. 
+Include error handling, validation, and proper HTTP status codes.
+```
+
+```bash Database Function
+Create a database function that [action] [entity] with [specific requirements]. 
+Use [ORM/database] and include proper error handling and type safety.
+```
+</CodeGroup>
+
+### Debugging & Fixes
+
+<CodeGroup>
+```bash Bug Fix
+Fix the [specific issue] in [file/component] where [problem description]. 
+The expected behavior is [expected] but currently [actual behavior].
+```
+
+```bash Performance Issue
+Optimize [specific component/function] for better performance. Currently experiencing [performance issue]. 
+Target [specific metric like load time, memory usage].
+```
+
+```bash Error Investigation
+Investigate why [specific error/behavior] occurs in [context]. 
+Check for common causes like [potential causes based on context].
+```
+</CodeGroup>
+
+## Real-World Examples
+
+### Frontend Development
+
+#### Building a Form Component
+
+```bash
+Create a UserRegistrationForm component that:
+- Has fields for email, password, confirm password, and name
+- Uses React Hook Form for validation
+- Shows real-time validation errors
+- Submits to our /api/register endpoint
+- Handles loading and error states
+- Follows our design system button and input styles
+```
+
+#### State Management
+
+```bash
+Add Redux Toolkit state management for user authentication that:
+- Stores user profile, token, and login status
+- Has actions for login, logout, and profile updates
+- Persists auth state to localStorage
+- Includes middleware for automatic token refresh
+```
+
+#### Responsive Design
+
+```bash
+Make the ProductGrid component responsive:
+- 1 column on mobile (< 768px)
+- 2 columns on tablet (768px - 1024px) 
+- 3 columns on desktop (> 1024px)
+- Use CSS Grid with gap of 1rem
+- Maintain aspect ratios for product images
+```
+
+### Backend Development
+
+#### API Development
+
+```bash
+Create a REST API for blog posts with:
+- GET /api/posts (list with pagination, filtering by category/author)
+- GET /api/posts/:id (single post with comments)
+- POST /api/posts (create, requires authentication)
+- PUT /api/posts/:id (update, requires author/admin)
+- DELETE /api/posts/:id (delete, requires author/admin)
+- Include proper validation using Joi schemas
+```
+
+#### Database Operations
+
+```bash
+Create Prisma schema and operations for a task management system:
+- User model (id, email, name, created_at)
+- Task model (id, title, description, status, priority, user_id, due_date)
+- Include relations and indexes
+- Add CRUD operations with TypeScript types
+```
+
+#### Authentication & Security
+
+```bash
+Implement JWT authentication middleware that:
+- Validates JWT tokens from Authorization header
+- Handles token expiration gracefully
+- Adds user info to request object
+- Returns proper error responses (401, 403)
+- Supports role-based permissions
+```
+
+### Testing
+
+#### Unit Tests
+
+```bash
+Write comprehensive unit tests for the UserService class:
+- Test user creation with valid/invalid data
+- Test password hashing and verification
+- Mock database calls using Jest
+- Achieve 90%+ code coverage
+- Include edge cases and error scenarios
+```
+
+#### Integration Tests
+
+```bash
+Create integration tests for the authentication flow:
+- Test registration endpoint with various input combinations
+- Test login with correct/incorrect credentials
+- Test protected routes with/without valid tokens
+- Use Supertest and test database
+- Clean up test data after each test
+```
+
+#### E2E Tests
+
+```bash
+Write Cypress E2E tests for the checkout process:
+- Add items to cart from product page
+- Proceed through checkout steps
+- Fill in shipping and payment info
+- Complete purchase and verify confirmation
+- Test with different user scenarios
+```
+
+### DevOps & Deployment
+
+#### Docker Setup
+
+```bash
+Create Docker configuration for the Node.js app:
+- Multi-stage build for production optimization
+- Include both development and production environments
+- Set up docker-compose with database, redis, and app services
+- Configure proper environment variables and secrets
+- Include health checks and restart policies
+```
+
+#### CI/CD Pipeline
+
+```bash
+Set up GitHub Actions workflow that:
+- Runs on push to main and pull requests
+- Installs dependencies and runs linting
+- Executes unit and integration tests
+- Builds Docker image and pushes to registry
+- Deploys to staging environment automatically
+- Requires manual approval for production deployment
+```
+
+## Task-Specific Templates
+
+### Code Review & Refactoring
+
+```bash
+Review the [filename] for:
+- Code quality and maintainability
+- Performance optimizations
+- Security vulnerabilities
+- Best practices compliance
+- Suggest specific improvements with examples
+```
+
+```bash
+Refactor [component/function] to:
+- Improve readability and maintainability
+- Extract reusable logic into separate functions
+- Add proper TypeScript types
+- Follow [specific pattern like hooks, HOC, etc.]
+- Maintain existing functionality and tests
+```
+
+### Documentation
+
+```bash
+Generate comprehensive documentation for [component/API/function]:
+- Include overview and purpose
+- Document all parameters/props with types
+- Provide usage examples
+- List common use cases
+- Add troubleshooting section
+- Format as JSDoc/markdown
+```
+
+### Migration & Updates
+
+```bash
+Migrate from [old technology] to [new technology]:
+- Analyze current implementation
+- Create migration plan with steps
+- Maintain backward compatibility where possible
+- Update tests and documentation
+- Provide rollback strategy
+```
+
+## Advanced Patterns
+
+### Architecture & Design
+
+```bash
+Design a microservices architecture for [application domain]:
+- Identify service boundaries and responsibilities
+- Define API contracts between services
+- Choose appropriate communication patterns
+- Plan data storage strategy
+- Include monitoring and logging approach
+```
+
+### Performance Optimization
+
+```bash
+Analyze and optimize [specific component/endpoint] for:
+- Reduce bundle size by [target amount]
+- Improve [specific metric] by [target improvement]
+- Implement caching strategy
+- Add performance monitoring
+- Document optimization techniques used
+```
+
+### Security Hardening
+
+```bash
+Security audit and hardening for [component/endpoint]:
+- Identify potential vulnerabilities
+- Implement input validation and sanitization
+- Add rate limiting and authentication checks
+- Configure CORS and security headers
+- Document security measures implemented
+```
+
+## Workflow Templates
+
+### Feature Development
+
+```bash
+Implement [feature name] following our development process:
+1. Create feature branch from main
+2. Set up database migrations if needed
+3. Implement backend API endpoints
+4. Create frontend components
+5. Add comprehensive tests
+6. Update documentation
+7. Create pull request with detailed description
+```
+
+### Bug Investigation
+
+```bash
+Investigate and fix [bug description]:
+1. Reproduce the issue in development
+2. Identify root cause with debugging
+3. Create failing test that demonstrates the bug
+4. Implement fix with minimal changes
+5. Verify fix resolves issue and doesn't break existing functionality
+6. Update tests and documentation as needed
+```
+
+## Tips for Using Templates
+
+### Customization
+
+- Replace `[placeholders]` with your specific values
+- Adapt the scope based on your project size
+- Add technology-specific requirements
+- Include your team's coding standards
+
+### Context Enhancement
+
+- Mention your current tech stack
+- Reference existing code patterns
+- Include performance or security requirements
+- Specify testing frameworks and tools
+
+### Iterative Refinement
+
+- Start with a template and refine based on results
+- Add more specific requirements as needed
+- Break down complex templates into smaller tasks
+- Ask for clarification when results don't match expectations
+
+Remember: These templates are starting points. Customize them based on your specific project needs, tech stack, and requirements.

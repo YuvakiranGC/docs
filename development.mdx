@@ -22,11 +22,7 @@ Get Gammacode installed and ready for development:
     ```powershell
     Invoke-WebRequest -Uri https://gammacode.dev/install.ps1 -OutFile install.ps1; .\install.ps1
     ```
-    
-    **Windows PowerShell:**
-    ```powershell theme={null}
-    Invoke-WebRequest -Uri https://gammacode.dev/install.ps1 -OutFile install.ps1; .\install.ps1
-    ```
+  
   </Step>
 
   <Step title="Verify installation">
@@ -86,246 +82,424 @@ Set up new projects with Gammacode:
     ```
     > /init
     ```
-    This creates an `Agents.MD` file where you can add project-specific instructions that Gammacode will follow throughout your development workflow.
+    `/init` analyzes your codebase and creates a project-specific `AGENTS.md` file containing build commands, code style guidelines, and project conventions that Gammacode will follow throughout your development workflow.
   </Step>
 </Steps>
 
-## Daily development workflows
+# Common workflows
 
-### Morning startup routine
+> Learn about common workflows with Gammacode.
 
-Start your development day efficiently:
+Each task in this document includes clear instructions, example commands, and best practices to help you get the most from Gammacode.
 
-```bash
-# Check Gammacode status
-gammacode status
+## Understand new codebases
 
-# Start your main development session
-gammacode
-```
+### Get a quick codebase overview
 
-```
-> what did I work on yesterday?
-> show me any changes since my last session
-> what should I focus on today?
-```
-
-### Code review and quality workflow
-
-Integrate Gammacode into your quality assurance process:
+Suppose you've just joined a new project and need to understand its structure quickly.
 
 <Steps>
-  <Step title="Pre-commit review">
-    ```
-    > review my staged changes for any issues
-    ```
-  </Step>
-
-  <Step title="Code quality check">
-    ```
-    > check for code smells and suggest improvements
+  <Step title="Navigate to the project root directory">
+    ```bash theme={null}
+    cd /path/to/project
     ```
   </Step>
 
-  <Step title="Security review">
-    ```
-    > scan my changes for potential security vulnerabilities
+  <Step title="Start Gammacode">
+    ```bash theme={null}
+    gammacode
     ```
   </Step>
 
-  <Step title="Performance analysis">
+  <Step title="Ask for a high-level overview">
     ```
-    > analyze performance implications of my changes
+    > give me an overview of this codebase
+    ```
+  </Step>
+
+  <Step title="Dive deeper into specific components">
+    ```
+    > explain the main architecture patterns used here
+    ```
+    ```
+    > what are the key data models?
+    ```
+    ```
+    > how is authentication handled?
     ```
   </Step>
 </Steps>
 
-### Collaborative development
+<Tip>
+  Tips:
+  * Start with broad questions, then narrow down to specific areas
+  * Ask about coding conventions and patterns used in the project
+  * Request explanations of project-specific terminology
+</Tip>
 
-Work effectively with your team using Gammacode:
+### Find relevant code
 
-**Branch management:**
-```
-> create a feature branch for user authentication improvements
-> help me merge this feature branch safely
-```
-
-**Documentation workflow:**
-```
-> update documentation for the changes I made
-> generate API documentation for the new endpoints
-```
-
-**Code handoff:**
-```
-> create a summary of my changes for the next developer
-> explain how to continue this feature implementation
-```
-
-## Advanced development patterns
-
-### Automated workflows
-
-Integrate Gammacode into your automation:
-
-**Git hooks with Gammacode:**
-```bash theme={null}
-# Pre-commit hook example
-#!/bin/sh
-gammacode run "review staged changes and flag any issues" --output-format text
-```
-
-**CI/CD integration:**
-```bash theme={null}
-# In your CI pipeline
-gammacode run "analyze test coverage and suggest improvements" --output-format json > coverage-analysis.json
-```
-
-### Multi-project workflows
-
-Manage multiple projects efficiently:
+Suppose you need to locate code related to a specific feature or functionality.
 
 <Steps>
-  <Step title="Project switching">
-    ```bash theme={null}
-    # Quick project switch with context
-    cd ../other-project && gammacode run --continue "switch context to this project"
+  <Step title="Ask Gammacode to find relevant files">
+    ```
+    > find the files that handle user authentication
     ```
   </Step>
 
-  <Step title="Cross-project analysis">
+  <Step title="Get context on how components interact">
     ```
-    > compare the architecture of this project with /path/to/other/project
+    > how do these authentication files work together?
     ```
   </Step>
 
-  <Step title="Shared workflow patterns">
+  <Step title="Understand the execution flow">
     ```
-    > help me standardize development practices across my projects
+    > trace the login process from front-end to database
     ```
   </Step>
 </Steps>
 
-## Troubleshooting development issues
+<Tip>
+  Tips:
+  * Be specific about what you're looking for
+  * Use domain language from the project
+</Tip>
 
-### Common workflow problems
+## Fix bugs efficiently
 
-**Authentication issues:**
-```bash theme={null}
-# Check status
-gammacode status
-
-# Re-authenticate if needed
-gammacode logout && gammacode login
-```
-
-**Performance optimization:**
-```bash theme={null}
-# Check available models
-gammacode models
-
-# Upgrade to latest version
-gammacode upgrade
-```
-
-**Context management:**
-```
-> clear conversation history but keep project context
-> reset to a clean development state
-```
-
-### Debug workflow problems
-
-When Gammacode isn't working as expected:
+Suppose you've encountered an error message and need to find and fix its source.
 
 <Steps>
-  <Step title="Check system status">
-    ```bash theme={null}
-    gammacode status
+  <Step title="Share the error with Gammacode">
+    ```
+    > I'm seeing an error when I run npm test
     ```
   </Step>
 
-  <Step title="Verify project context">
+  <Step title="Ask for fix recommendations">
     ```
-    > what files and directories can you see in this project?
+    > suggest a few ways to fix the @ts-ignore in user.ts
     ```
   </Step>
 
-  <Step title="Reset if needed">
-    ```bash theme={null}
-    gammacode logout
-    gammacode login
+  <Step title="Apply the fix">
+    ```
+    > update user.ts to add the null check you suggested
     ```
   </Step>
 </Steps>
 
-## Best practices for development workflows
+<Tip>
+  Tips:
+  * Tell Gammacode the command to reproduce the issue and get a stack trace
+  * Mention any steps to reproduce the error
+  * Let Gammacode know if the error is intermittent or consistent
+</Tip>
 
-### Efficient communication patterns
+## Refactor code
 
-**Be specific in your requests:**
+Suppose you need to update old code to use modern patterns and practices.
+
+<Steps>
+  <Step title="Identify legacy code for refactoring">
+    ```
+    > find deprecated API usage in our codebase
+    ```
+  </Step>
+
+  <Step title="Get refactoring recommendations">
+    ```
+    > suggest how to refactor utils.js to use modern JavaScript features
+    ```
+  </Step>
+
+  <Step title="Apply the changes safely">
+    ```
+    > refactor utils.js to use ES2024 features while maintaining the same behavior
+    ```
+  </Step>
+
+  <Step title="Verify the refactoring">
+    ```
+    > run tests for the refactored code
+    ```
+  </Step>
+</Steps>
+
+<Tip>
+  Tips:
+  * Ask Gammacode to explain the benefits of the modern approach
+  * Request that changes maintain backward compatibility when needed
+  * Do refactoring in small, testable increments
+</Tip>
+
+## Work with tests
+
+Suppose you need to add tests for uncovered code.
+
+<Steps>
+  <Step title="Identify untested code">
+    ```
+    > find functions in NotificationsService.swift that are not covered by tests
+    ```
+  </Step>
+
+  <Step title="Generate test scaffolding">
+    ```
+    > add tests for the notification service
+    ```
+  </Step>
+
+  <Step title="Add meaningful test cases">
+    ```
+    > add test cases for edge conditions in the notification service
+    ```
+  </Step>
+
+  <Step title="Run and verify tests">
+    ```
+    > run the new tests and fix any failures
+    ```
+  </Step>
+</Steps>
+
+<Tip>
+  Tips:
+  * Ask for tests that cover edge cases and error conditions
+  * Request both unit and integration tests when appropriate
+  * Have Gammacode explain the testing strategy
+</Tip>
+
+## Create pull requests
+
+Suppose you need to create a well-documented pull request for your changes.
+
+<Steps>
+  <Step title="Summarize your changes">
+    ```
+    > summarize the changes I've made to the authentication module
+    ```
+  </Step>
+
+  <Step title="Generate a PR with Gammacode">
+    ```
+    > create a pr
+    ```
+  </Step>
+
+  <Step title="Review and refine">
+    ```
+    > enhance the PR description with more context about the security improvements
+    ```
+  </Step>
+
+  <Step title="Add testing details">
+    ```
+    > add information about how these changes were tested
+    ```
+  </Step>
+</Steps>
+
+<Tip>
+  Tips:
+  * Ask Gammacode directly to make a PR for you
+  * Review Gammacode's generated PR before submitting
+  * Ask Gammacode to highlight potential risks or considerations
+</Tip>
+
+## Handle documentation
+
+Suppose you need to add or update documentation for your code.
+
+<Steps>
+  <Step title="Identify undocumented code">
+    ```
+    > find functions without proper JSDoc comments in the auth module
+    ```
+  </Step>
+
+  <Step title="Generate documentation">
+    ```
+    > add JSDoc comments to the undocumented functions in auth.js
+    ```
+  </Step>
+
+  <Step title="Review and enhance">
+    ```
+    > improve the generated documentation with more context and examples
+    ```
+  </Step>
+
+  <Step title="Verify documentation">
+    ```
+    > check if the documentation follows our project standards
+    ```
+  </Step>
+</Steps>
+
+<Tip>
+  Tips:
+  * Specify the documentation style you want (JSDoc, docstrings, etc.)
+  * Ask for examples in the documentation
+  * Request documentation for public APIs, interfaces, and complex logic
+</Tip>
+
+## Work with images
+
+Suppose you need to work with images in your codebase, and you want Gammacode's help analyzing image content.
+
+<Steps>
+  <Step title="Add an image to the conversation">
+    You can use any of these methods:
+    1. Drag and drop an image into the Gammacode window
+    2. Copy an image and paste it into the CLI with ctrl+v (Do not use cmd+v)
+    3. Provide an image path to Gammacode. E.g., "Analyze this image: /path/to/your/image.png"
+  </Step>
+
+  <Step title="Ask Gammacode to analyze the image">
+    ```
+    > What does this image show?
+    ```
+    ```
+    > Describe the UI elements in this screenshot
+    ```
+    ```
+    > Are there any problematic elements in this diagram?
+    ```
+  </Step>
+
+  <Step title="Use images for context">
+    ```
+    > Here's a screenshot of the error. What's causing it?
+    ```
+    ```
+    > This is our current database schema. How should we modify it for the new feature?
+    ```
+  </Step>
+
+  <Step title="Get code suggestions from visual content">
+    ```
+    > Generate CSS to match this design mockup
+    ```
+    ```
+    > What HTML structure would recreate this component?
+    ```
+  </Step>
+</Steps>
+
+<Tip>
+  Tips:
+  * Use images when text descriptions would be unclear or cumbersome
+  * Include screenshots of errors, UI designs, or diagrams for better context
+  * You can work with multiple images in a conversation
+  * Image analysis works with diagrams, screenshots, mockups, and more
+</Tip>
+
+## Reference files and directories
+
+Use @ to quickly include files or directories without waiting for Gammacode to read them.
+
+<Steps>
+  <Step title="Reference a single file">
+    ```
+    > Explain the logic in @src/utils/auth.js
+    ```
+    This includes the full content of the file in the conversation.
+  </Step>
+
+  <Step title="Reference a directory">
+    ```
+    > What's the structure of @src/components?
+    ```
+    This provides a directory listing with file information.
+  </Step>
+</Steps>
+
+<Tip>
+  Tips:
+  * File paths can be relative or absolute
+  * @ file references add AGENTS.md in the file's directory and parent directories to context
+  * Directory references show file listings, not contents
+  * You can reference multiple files in a single message (e.g., "@file1.js and @file2.js")
+</Tip>
+
+## Use specialized agents
+
+Suppose you want to use specialized AI agents to handle specific tasks more effectively.
+
+<Steps>
+  <Step title="Create a custom agent">
+    ```bash theme={null}
+    gammacode agent create
+    ```
+    This opens an interactive flow where you can:
+    * Choose location (Current project or Global)
+    * Enter a description (e.g., "security analysis")
+    * Select which tools the agent can access
+    * The agent is created as `.gammacode/agent/agent_name.md`
+  </Step>
+
+  <Step title="Use agents automatically">
+    Gammacode will automatically delegate appropriate tasks to specialized agents:
+    ```
+    > review my recent code changes for security issues
+    ```
+    ```
+    > run all tests and fix any failures
+    ```
+  </Step>
+
+  <Step title="Explicitly request specific agents">
+    ```
+    > use the code-reviewer agent to check the auth module
+    ```
+    ```
+    > have the debugger agent investigate why users can't log in
+    ```
+  </Step>
+</Steps>
+
+<Tip>
+  Tips:
+  * Create project-specific agents in `.gammacode/agent/` for team sharing
+  * Use descriptive descriptions to enable automatic delegation
+  * Limit tool access to what each agent actually needs
+  * Agents help maintain focused expertise for specialized tasks
+</Tip>
+
+## Ask Gammacode about its capabilities
+
+Gammacode has built-in access to its documentation and can answer questions about its own features and limitations.
+
+### Example questions
 ```
-❌ "fix the bug"
-✅ "fix the null pointer exception in UserService.authenticate() method"
+> can Gammacode create pull requests?
 ```
 
-**Provide context:**
 ```
-❌ "add tests"
-✅ "add unit tests for the new authentication methods, focusing on edge cases and error handling"
+> how does Gammacode handle permissions?
 ```
 
-**Use iterative development:**
 ```
-> create a basic user registration form
-> add email validation to the registration form
-> add password strength requirements
+> what slash commands are available?
 ```
 
-### Project organization
-
-**Keep conversations organized:**
-- Use descriptive conversation starters
-- Group related tasks in single sessions
-- Use `gammacode run --resume` to return to specific topics
-
-**Maintain clean project structure:**
 ```
-> analyze our project structure and suggest improvements
-> help organize these utility functions into logical modules
+> what are the limitations of Gammacode?
 ```
 
-## Integration with development tools
+<Note>
+  Gammacode provides documentation-based answers to these questions. For executable examples and hands-on demonstrations, refer to the specific workflow sections above.
+</Note>
 
-### Version control integration
-
-```bash theme={null}
-# Commit with AI-generated messages
-gammacode run "create a commit message for my staged changes"
-
-# Branch management
-gammacode run "suggest a good branch name for this feature"
-```
-
-### Testing integration
-
-```bash theme={null}
-# Test-driven development
-gammacode run "help me write tests before implementing this feature"
-
-# Test analysis
-gammacode run "analyze test coverage and suggest additional test cases"
-```
-
-### Documentation integration
-
-```bash theme={null}
-# Keep docs updated
-gammacode run "update README with the new feature documentation"
-
-# API documentation
-gammacode run "generate API documentation for the new endpoints"
-```
+<Tip>
+  Tips:
+  * Gammacode always has access to the latest documentation, regardless of the version you're using
+  * Ask specific questions to get detailed answers
+  * Gammacode can explain complex features and advanced workflows
+</Tip>
 
 ## Next steps
 

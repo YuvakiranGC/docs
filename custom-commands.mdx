@@ -1,0 +1,378 @@
+> Create custom commands for repetitive tasks.
+
+Custom commands let you specify a prompt you want to run when that command is executed in Gammacode.
+
+```
+/my-command
+```
+
+Custom commands are in addition to the built-in commands like `/init`, `/undo`, `/redo`, `/help`.
+
+## Create command files
+
+Create markdown files in the `command/` directory to define custom commands.
+
+Create `.gammacode/command/test.md`:
+
+```markdown theme={null}
+---
+description: Run tests with coverage
+agent: build
+model: anthropic/claude-3-5-sonnet-20241022
+---
+
+Run the full test suite with coverage report and show any failures.
+Focus on the failing tests and suggest fixes.
+```
+
+The frontmatter defines command properties. The content becomes the template.
+
+Use the command by typing `/` followed by the command name.
+
+```
+/test
+```
+
+## Configure
+
+You can add custom commands by creating markdown files in the `command/` directory.
+
+### Markdown configuration
+
+Define commands using markdown files. Place them in:
+
+- **Global**: `~/.gammacode/command/`
+- **Per-project**: `.gammacode/command/`
+
+**Example command file:**
+
+```markdown theme={null}
+---
+description: Run tests with coverage
+agent: build
+model: anthropic/claude-3-5-sonnet-20241022
+---
+
+Run the full test suite with coverage report and show any failures.
+Focus on the failing tests and suggest fixes.
+```
+
+The markdown file name becomes the command name. For example, `test.md` lets you run:
+
+```
+/test
+```
+
+## Prompt configuration
+
+The prompts for the custom commands support several special placeholders and syntax.
+
+### Arguments
+
+Pass arguments to commands using the `$ARGUMENTS` placeholder.
+
+```markdown theme={null}
+---
+description: Create a new component
+---
+
+Create a new React component named $ARGUMENTS with TypeScript support.
+Include proper typing and basic structure.
+```
+
+Run the command with arguments:
+
+```
+/component Button
+```
+
+And `$ARGUMENTS` will be replaced with `Button`.
+
+### Shell output
+
+Use `!`command`` to inject bash command output into your prompt.
+
+For example, to create a custom command that analyzes test coverage:
+
+```markdown theme={null}
+---
+description: Analyze test coverage
+---
+
+Here are the current test results:
+!`npm test`
+
+Based on these results, suggest improvements to increase coverage.
+```
+
+Or to review recent changes:
+
+```markdown theme={null}
+---
+description: Review recent changes
+---
+
+Recent git commits:
+!`git log --oneline -10`
+
+Review these changes and suggest any improvements.
+```
+
+Commands run in your project's root directory and their output becomes part of the prompt.
+
+### File references
+
+Include files in your command using `@` followed by the filename.
+
+```markdown theme={null}
+---
+description: Review component
+---
+
+Review the component in @src/components/Button.tsx.
+Check for performance issues and suggest improvements.
+```
+
+The file content gets included in the prompt automatically.
+
+## Configuration options
+
+### Description
+
+Use the `description` option to provide a brief description of what the command does.
+
+```markdown theme={null}
+---
+description: Run tests with coverage
+---
+```
+
+This is shown as the description in Gammacode when you type the command.
+
+This is a **required** configuration option.
+
+### Agent
+
+Use the `agent` config to optionally specify which agent should execute this command. If this is a subagent, the command will trigger a subagent invocation by default.
+
+```markdown theme={null}
+---
+agent: plan
+---
+```
+
+This is an **optional** configuration option. If not specified, defaults to your current agent.
+
+### Model
+
+Use the `model` config to override the default model for this command.
+
+```markdown theme={null}
+---
+model: anthropic/claude-3-5-sonnet-20241022
+---
+```
+
+This is an **optional** configuration option.
+
+### Subtask
+
+Use the `subtask` boolean to force the command to trigger a subagent invocation. This is useful if you want the command to not pollute your primary context.
+
+```markdown theme={null}
+---
+subtask: true
+---
+```
+
+This is an **optional** configuration option.
+
+## Examples
+
+### Test runner command
+
+```markdown theme={null}
+---
+description: Run tests with detailed output
+agent: build
+---
+
+Run the full test suite and provide detailed analysis of any failures.
+Include suggestions for fixing failing tests.
+```
+
+### Component generator
+
+```markdown theme={null}
+---
+description: Generate a new React component
+---
+
+Create a new React component named $ARGUMENTS with the following:
+- TypeScript support
+- Proper prop types
+- Basic styling structure
+- Unit test file
+
+Place it in the appropriate directory structure.
+```
+
+### Code review command
+
+```markdown theme={null}
+---
+description: Review recent changes
+agent: plan
+---
+
+Recent changes in the repository:
+!`git diff --name-only HEAD~5..HEAD`
+
+Review these files for:
+- Code quality issues
+- Security vulnerabilities
+- Performance concerns
+- Best practice violations
+
+Provide actionable feedback for improvements.
+```
+
+### Documentation updater
+
+```markdown theme={null}
+---
+description: Update documentation for a file
+---
+
+Analyze the file @$ARGUMENTS and update its documentation:
+- Add missing JSDoc comments
+- Update README if needed
+- Ensure examples are current
+- Check for outdated information
+```
+
+Usage: `/docs src/utils/helper.js`
+
+### Security audit
+
+```markdown theme={null}
+---
+description: Perform security audit
+agent: security-auditor
+subtask: true
+---
+
+Perform a comprehensive security audit of the current codebase:
+
+Current dependencies:
+!`npm list --depth=0`
+
+Recent code changes:
+!`git diff --name-only HEAD~10..HEAD`
+
+Focus on:
+- Dependency vulnerabilities
+- Code injection risks
+- Authentication issues
+- Data exposure concerns
+```
+
+## Built-in commands
+
+Gammacode includes several built-in commands like `/init`, `/undo`, `/redo`, `/share`, `/help`.
+
+<Note>
+  Custom commands can override built-in commands. If you define a custom command with the same name, it will override the built-in command.
+</Note>
+
+## Use cases
+
+Here are some common use cases for custom commands:
+
+- **Development workflows**: Automated testing, building, and deployment commands
+- **Code analysis**: Security audits, performance analysis, code quality checks
+- **Documentation**: Generating or updating documentation for specific files or modules
+- **Project setup**: Creating new components, services, or features with boilerplate code
+- **Git operations**: Custom commit messages, branch management, release preparation
+- **Debugging**: Analyzing logs, running diagnostics, troubleshooting issues
+
+## Best practices
+
+* **Use descriptive names**: Choose command names that clearly indicate their purpose
+* **Leverage arguments**: Use `$ARGUMENTS` to make commands flexible and reusable
+* **Combine with agents**: Use specific agents for specialized tasks (e.g., security agent for audits)
+* **Include context**: Use shell output and file references to provide relevant context
+* **Keep focused**: Each command should have a single, clear purpose
+* **Document usage**: Include clear descriptions and examples of how to use the command
+* **Version control**: Check project commands into version control for team sharing
+
+## Advanced usage
+
+### Conditional logic
+
+You can create commands that adapt based on the current state:
+
+```markdown theme={null}
+---
+description: Smart test runner
+---
+
+Current git status:
+!`git status --porcelain`
+
+If there are unstaged changes, run tests on changed files only.
+Otherwise, run the full test suite with coverage.
+```
+
+### Multi-step workflows
+
+Create commands that perform complex, multi-step operations:
+
+```markdown theme={null}
+---
+description: Deploy preparation
+---
+
+Prepare for deployment by:
+1. Running full test suite: !`npm test`
+2. Checking build: !`npm run build`
+3. Reviewing recent changes: !`git log --oneline -5`
+
+Verify everything is ready and suggest any needed fixes.
+```
+
+### Environment-specific commands
+
+Tailor commands for different environments:
+
+```markdown theme={null}
+---
+description: Environment-specific deployment
+---
+
+Current environment: !`echo $NODE_ENV`
+Current branch: !`git branch --show-current`
+
+Provide deployment instructions specific to this environment and branch.
+Include any environment-specific configuration changes needed.
+```
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Agents" icon="robot" href="/agents">
+    Learn about creating and using specialized AI agents for task-specific workflows
+  </Card>
+  
+  <Card title="Headless Mode" icon="terminal" href="/headless">
+    Learn how to run Gammacode programmatically without interactive UI
+  </Card>
+  
+  <Card title="Development Workflows" icon="code" href="/development">
+    Step-by-step guides for common development tasks and best practices
+  </Card>
+  
+  <Card title="Quickstart" icon="rocket" href="/quickstart">
+    Get started with Gammacode in just a few minutes
+  </Card>
+</CardGroup>

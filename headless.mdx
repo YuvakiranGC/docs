@@ -1,0 +1,228 @@
+> Run Gammacode programmatically without interactive UI
+
+## Overview
+
+The headless mode allows you to run Gammacode programmatically from command line scripts and automation tools without any interactive UI.
+
+## Basic usage
+
+The primary command-line interface to Gammacode is the `gammacode run` command:
+
+```bash theme={null}
+gammacode run "Stage my changes and write a set of commits for them"
+```
+
+## Configuration Options
+
+Headless mode leverages all the CLI options available in Gammacode. Here are the key ones for automation and scripting:
+
+| Flag                    | Description                                                                      | Example                                                           |
+| :---------------------- | :------------------------------------------------------------------------------- | :---------------------------------------------------------------- |
+| `message..`             | Message to send (positional arguments)                                          | `gammacode run "analyze this code"`                              |
+| `--command`             | The command to run, use message for args                                        | `gammacode run --command "analyze" "this code"`                  |
+| `-c, --continue`        | Continue the last session                                                        | `gammacode run --continue "now optimize it"`                     |
+| `-s, --session`         | Session id to continue                                                           | `gammacode run --session abc123 "update tests"`                  |
+| `-m, --model`           | Model to use in the format of provider/model                                    | `gammacode run --model "anthropic/claude-3-sonnet" "review code"` |
+| `--agent`               | Agent to use                                                                     | `gammacode run --agent security-analyzer "check for vulnerabilities"` |
+| `--format`              | Format: default (formatted) or json (raw JSON events)                          | `gammacode run --format json "analyze performance"`              |
+| `-v, --version`         | Show version number                                                              | `gammacode run --version`                                         |
+| `--help`                | Show help                                                                        | `gammacode run --help`                                            |
+
+## Multi-turn conversations
+
+For multi-turn conversations, you can resume conversations or continue from the most recent session:
+
+```bash theme={null}
+# Continue the most recent conversation
+gammacode run --continue "Now refactor this for better performance"
+
+# Resume a specific conversation by session ID
+gammacode run --session 550e8400-e29b-41d4-a716-446655440000 "Update the tests"
+
+# Use a specific model for the conversation
+gammacode run --model "anthropic/claude-3-opus" "Perform detailed code analysis"
+```
+
+## Output Formats
+
+### Default Output
+
+```bash theme={null}
+gammacode run "Explain file src/components/Header.tsx"
+# Output: This is a React component showing...
+```
+
+### JSON Output
+
+Returns structured data including metadata:
+
+```bash theme={null}
+gammacode run --format json "How does the data layer work?"
+```
+
+Response format includes raw JSON events from the conversation.
+
+## Agent Integration Examples
+
+### SRE Incident Response Bot
+
+```bash theme={null}
+#!/bin/bash
+# Automated incident response agent
+
+investigate_incident() {
+    local incident_description="$1"
+    local severity="${2:-medium}"
+    
+    gammacode run --agent sre-incident-responder \
+      --format json \
+      "Incident: $incident_description (Severity: $severity). Diagnose the issue, assess impact, and provide immediate action items."
+}
+
+# Usage
+investigate_incident "Payment API returning 500 errors" "high"
+```
+
+### Automated Security Review
+
+```bash theme={null}
+# Security audit agent for pull requests
+audit_pr() {
+    local pr_number="$1"
+    
+    gh pr diff "$pr_number" | gammacode run --agent security-reviewer \
+      --format json \
+      "Review this PR for vulnerabilities, insecure patterns, and compliance issues."
+}
+
+# Usage and save to file
+audit_pr 123 > security-report.json
+```
+
+### Multi-turn Legal Assistant
+
+```bash theme={null}
+# Legal document review with session persistence
+
+# Start initial review and capture session ID
+session_output=$(gammacode run --format json "Start legal review session for contract.pdf")
+session_id=$(echo "$session_output" | jq -r '.session_id')
+
+# Review contract in multiple steps
+gammacode run --session "$session_id" "Review contract.pdf for liability clauses"
+gammacode run --session "$session_id" "Check compliance with GDPR requirements"  
+gammacode run --session "$session_id" "Generate executive summary of risks"
+```
+
+## Specialized Agent Usage
+
+### Using specific agents for tasks
+
+```bash theme={null}
+# Use a code reviewer agent
+gammacode run --agent code-reviewer "Review my recent changes for security issues"
+
+# Use a data analysis agent  
+gammacode run --agent data-scientist "Analyze user engagement trends from analytics.csv"
+
+# Use a debugging agent
+gammacode run --agent debugger "Investigate why the login function is failing"
+```
+
+## Best Practices
+
+* **Use JSON output format** for programmatic parsing of responses:
+  ```bash theme={null}
+  # Parse JSON response with jq
+  result=$(gammacode run --format json "Generate code")
+  # Process the JSON events as needed
+  ```
+
+* **Handle errors gracefully** - check exit codes and stderr:
+  ```bash theme={null}
+  if ! gammacode run "$prompt" 2>error.log; then
+      echo "Error occurred:" >&2
+      cat error.log >&2
+      exit 1
+  fi
+  ```
+
+* **Use session management** for maintaining context in multi-turn conversations
+
+* **Leverage specialized agents** for domain-specific tasks to get better results
+
+* **Consider timeouts** for long-running operations:
+  ```bash theme={null}
+  timeout 300 gammacode run "$complex_prompt" || echo "Timed out after 5 minutes"
+  ```
+
+* **Respect rate limits** when making multiple requests by adding delays between calls
+
+## Command Examples
+
+### Basic Analysis
+```bash theme={null}
+# Analyze a specific file
+gammacode run "Analyze the performance of src/utils/database.js"
+
+# Review recent git changes
+gammacode run "Review my staged changes for any issues"
+```
+
+### Using Different Models
+```bash theme={null}
+# Use a specific model for complex analysis
+gammacode run --model "anthropic/claude-3-opus" "Perform comprehensive security audit"
+
+# Use a faster model for simple tasks
+gammacode run --model "anthropic/claude-3-haiku" "Fix syntax errors in this file"
+```
+
+### Session Management
+```bash theme={null}
+# Start a new conversation and continue it
+gammacode run "Let's work on optimizing our API"
+gammacode run --continue "Now let's add caching to the database queries"
+gammacode run --continue "Finally, let's update the documentation"
+```
+
+## Integration with Development Workflows
+
+### Pre-commit Hooks
+```bash theme={null}
+#!/bin/sh
+# .git/hooks/pre-commit
+gammacode run --agent security-reviewer "Review staged changes for security issues"
+```
+
+### CI/CD Pipeline Integration
+```bash theme={null}
+# In your CI pipeline
+gammacode run --format json "Analyze test coverage and suggest improvements" > coverage-analysis.json
+```
+
+### Automated Code Review
+```bash theme={null}
+# Review pull request changes
+git diff main...HEAD | gammacode run --agent code-reviewer "Review these changes for quality and best practices"
+```
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Agents" icon="robot" href="/agents">
+    Learn about creating and using specialized AI agents for task-specific workflows
+  </Card>
+  
+  <Card title="Development Workflows" icon="code" href="/development">
+    Step-by-step guides for common development tasks and best practices
+  </Card>
+  
+  <Card title="Quickstart" icon="rocket" href="/quickstart">
+    Get started with Gammacode in just a few minutes
+  </Card>
+  
+  <Card title="Overview" icon="book-open" href="/overview">
+    Complete overview of Gammacode features and capabilities
+  </Card>
+</CardGroup>

@@ -22,47 +22,36 @@
             ]
           },
           {
-            "group": "Customization",
+            "group": "Work with Gammacode",
             "pages": [
-              "essentials/settings",
-              "essentials/navigation"
-            ]
-          },
-          {
-            "group": "Writing content",
-            "pages": [
-              "essentials/markdown",
-              "essentials/code",
-              "essentials/images",
-              "essentials/reusable-snippets"
-            ]
-          },
-          {
-            "group": "AI tools",
-            "pages": [
-              "ai-tools/cursor",
-              "ai-tools/claude-code",
-              "ai-tools/windsurf"
+              "agents",
+              "custom-commands",
+              "permissions",
+              "slash-commands",
+              "model-context-protocol",
+              "headless",
+              "github-action",
+              "troubleshooting",
+              "prompt-guidelines",
+              "prompt-cookbook"
             ]
           }
         ]
       },
       {
-        "tab": "Issue Hunters",
+        "tab": "AI Scanner",
         "groups": [
           {
-            "group": "API documentation",
+            "group": "Getting Started",
             "pages": [
-              "api-reference/introduction"
+              "ai-scanner/overview"
             ]
           },
           {
-            "group": "Endpoint examples",
+            "group": "Using AI Scanner",
             "pages": [
-              "api-reference/endpoint/get",
-              "api-reference/endpoint/create",
-              "api-reference/endpoint/delete",
-              "api-reference/endpoint/webhook"
+              "ai-scanner/scan-results",
+              "ai-scanner/fixing-issues"
             ]
           }
         ]
@@ -91,13 +80,17 @@
     "links": [
       {
         "label": "Support",
-        "href": "mailto:hi@mintlify.com"
+        "href": "mailto:support@gammacode.dev"
+      },
+      {
+        "label": "Scan Dashboard",
+        "href": "https://gammacode.dev/profile"
       }
     ],
     "primary": {
       "type": "button",
-      "label": "Dashboard",
-      "href": "https://dashboard.mintlify.com"
+      "label": "Sign up",
+      "href": "https://gammacode.dev"
     }
   },
   "contextual": {
@@ -114,9 +107,17 @@
   },
   "footer": {
     "socials": {
-      "x": "https://x.com/mintlify",
-      "github": "https://github.com/mintlify",
-      "linkedin": "https://linkedin.com/company/mintlify"
+      "x": "https://x.com/gammacode",
+      "github": "https://github.com/gammacode",
+      "linkedin": "https://linkedin.com/company/gammacode"
     }
+  },
+  "footerSocials": {
+    "x": "https://x.com/gammacode",
+    "github": "https://github.com/gammacode",
+    "linkedin": "https://linkedin.com/company/gammacode"
+  },
+  "modeToggle": {
+    "default": "light"
   }
 }

@@ -1,0 +1,221 @@
+---
+title: 'Prompt Guidelines'
+description: 'Best practices for writing effective prompts that get the best results from Gammacode'
+---
+
+> Learn how to write clear, effective prompts that help Gammacode understand your intent and deliver better results.
+
+## Writing effective prompts
+
+### Be specific and clear
+
+The more specific your request, the better Gammacode can help you:
+
+<CodeGroup>
+```bash Good
+Fix the authentication bug in login.js where users can't sign in with empty passwords
+```
+
+```bash Avoid
+Fix the bug
+```
+</CodeGroup>
+
+### Provide context
+
+Help Gammacode understand your codebase and goals:
+
+<CodeGroup>
+```bash Good
+Add error handling to the user registration API endpoint. We're using Express.js with async/await pattern and want to return proper HTTP status codes
+```
+
+```bash Avoid
+Add error handling
+```
+</CodeGroup>
+
+### Break down complex tasks
+
+For multi-step requests, break them into clear components:
+
+<CodeGroup>
+```bash Good
+Create a user dashboard component that:
+1. Shows user profile information
+2. Lists recent activity 
+3. Has a settings panel
+4. Uses our existing design system components
+```
+
+```bash Avoid
+Create a user dashboard with everything
+```
+</CodeGroup>
+
+## Common prompt patterns
+
+### Code generation
+
+**Pattern:** "Create a [component/function/class] that [specific functionality]"
+
+```bash
+Create a React component that displays a loading spinner with customizable size and color props
+```
+
+### Debugging
+
+**Pattern:** "Fix the [specific issue] in [file/function] where [description of problem]"
+
+```bash
+Fix the memory leak in DataProcessor.js where event listeners aren't being cleaned up on component unmount
+```
+
+### Code review
+
+**Pattern:** "Review [file/function] for [specific concerns like performance, security, best practices]"
+
+```bash
+Review the authentication middleware for security vulnerabilities and suggest improvements
+```
+
+### Refactoring
+
+**Pattern:** "Refactor [specific code] to [improvement goal] while [constraints]"
+
+```bash
+Refactor the user service to use TypeScript interfaces while maintaining backward compatibility
+```
+
+## Context and constraints
+
+### Specify your tech stack
+
+Always mention the technologies you're using:
+
+```bash
+Add form validation to the signup page using React Hook Form and Zod schema validation
+```
+
+### Include relevant constraints
+
+Mention important limitations or requirements:
+
+```bash
+Optimize the image upload component for mobile devices with slow connections, keeping bundle size under 50KB
+```
+
+### Reference existing patterns
+
+Point to existing code when relevant:
+
+```bash
+Create a new payment method component following the same pattern as the existing CreditCardForm component
+```
+
+## Getting better results
+
+### Use iterative refinement
+
+Start with a clear request, then refine based on results:
+
+1. **Initial:** "Add a search feature to the product list"
+2. **Refined:** "Add debounced search with filters for category and price range"
+3. **Further refined:** "Add search suggestions and highlight matching terms in results"
+
+### Ask for explanations
+
+Request explanations for complex changes:
+
+```bash
+Add caching to the API calls and explain the strategy you chose
+```
+
+### Specify output format
+
+Tell Gammacode how you want the response structured:
+
+```bash
+List the security improvements needed for the login system, prioritized by risk level
+```
+
+## Troubleshooting prompts
+
+### When Gammacode misunderstands
+
+**Add more context:**
+```bash
+Previous request: "Update the styles"
+Better request: "Update the CSS styles in components/Button.css to match the new design system colors from design-tokens.css"
+```
+
+### When results are too broad
+
+**Be more specific:**
+```bash
+Previous request: "Improve performance"
+Better request: "Optimize the ProductGrid component's rendering performance for lists with 1000+ items"
+```
+
+### When you need different approaches
+
+**Ask for alternatives:**
+```bash
+Show me three different ways to implement user authentication: JWT tokens, sessions, and OAuth
+```
+
+## Working with files
+
+### Reference specific files
+
+```bash
+Update the error handling in src/utils/api.js to use the new logger from src/services/logger.js
+```
+
+### Specify file creation
+
+```bash
+Create a new utility function in src/utils/validation.js for email format checking
+```
+
+### Request file organization
+
+```bash
+Reorganize the components folder to separate UI components from business logic components
+```
+
+## Advanced techniques
+
+### Chain related tasks
+
+```bash
+Create a user profile page, add it to the navigation menu, and write tests for the new component
+```
+
+### Reference external resources
+
+```bash
+Implement pagination following the GitHub API pagination pattern
+```
+
+### Ask for documentation
+
+```bash
+Add JSDoc comments to the utility functions and generate a usage guide
+```
+
+## Common mistakes to avoid
+
+❌ **Vague requests:** "Make it better"  
+✅ **Specific requests:** "Improve loading performance by implementing lazy loading"
+
+❌ **Missing context:** "Add validation"  
+✅ **With context:** "Add client-side validation to the contact form using our existing validation library"
+
+❌ **Too many tasks:** "Build the entire user management system"  
+✅ **Focused scope:** "Create the user registration form with email validation"
+
+❌ **No constraints:** "Style the button"  
+✅ **Clear constraints:** "Style the button to match our design system's primary button variant"
+
+Remember: Good prompts save time and lead to better results. Take a moment to think about what you really need before asking.

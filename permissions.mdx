@@ -1,0 +1,333 @@
+# Permissions
+
+> Control which actions require approval to run.
+
+By default, Gammacode **allows all operations** without requiring explicit approval. You can configure this using the `permission` option in your configuration files.
+
+```json theme={null}
+{
+  "permission": {
+    "edit": "allow",
+    "bash": "ask",
+    "webfetch": "deny"
+  }
+}
+```
+
+This lets you configure granular controls for the `edit`, `bash`, and `webfetch` tools.
+
+**Permission levels:**
+- `"ask"` — Prompt for approval before running the tool
+- `"allow"` — Allow all operations without approval
+- `"deny"` — Disable the tool
+
+## Tools
+
+Currently, the permissions for the `edit`, `bash`, and `webfetch` tools can be configured through the `permission` option.
+
+### Edit permissions
+
+Use the `permission.edit` key to control whether file editing operations require user approval.
+
+```json theme={null}
+{
+  "permission": {
+    "edit": "ask"
+  }
+}
+```
+
+This affects all file modification operations including:
+- Creating new files
+- Modifying existing files
+- Deleting files
+- Moving or renaming files
+
+### Bash permissions
+
+You can use the `permission.bash` key to control whether bash commands as a whole need user approval.
+
+```json theme={null}
+{
+  "permission": {
+    "bash": "ask"
+  }
+}
+```
+
+Or, you can target specific commands and set them to `allow`, `ask`, or `deny`.
+
+```json theme={null}
+{
+  "permission": {
+    "bash": {
+      "git push": "ask",
+      "git status": "allow",
+      "git diff": "allow",
+      "npm run build": "allow",
+      "ls": "allow",
+      "pwd": "allow"
+    }
+  }
+}
+```
+
+#### Wildcards
+
+You can use wildcards to manage permissions for specific bash commands.
+
+<Tip>
+  You can use wildcards to manage permissions for specific bash commands using glob patterns.
+</Tip>
+
+For example, **disable all** Docker commands:
+
+```json theme={null}
+{
+  "permission": {
+    "bash": {
+      "docker *": "deny"
+    }
+  }
+}
+```
+
+You can also use the `*` wildcard to manage permissions for all commands. For example, **deny all commands** except a couple of specific ones:
+
+```json theme={null}
+{
+  "permission": {
+    "bash": {
+      "*": "deny",
+      "pwd": "allow",
+      "git status": "ask"
+    }
+  }
+}
+```
+
+Here a specific rule can override the `*` wildcard.
+
+#### Glob patterns
+
+The wildcard uses simple regex globbing patterns:
+
+- `*` matches zero or more of any character
+- `?` matches exactly one character
+- All other characters match literally
+
+**Examples:**
+- `git *` matches any git command
+- `npm run *` matches any npm run script
+- `docker-*` matches docker-compose, docker-build, etc.
+- `test?` matches test1, testA, etc.
+
+### Webfetch permissions
+
+Use the `permission.webfetch` key to control whether Gammacode can fetch web pages.
+
+```json theme={null}
+{
+  "permission": {
+    "webfetch": "ask"
+  }
+}
+```
+
+This affects the ability to:
+- Fetch external web pages
+- Access APIs and web services
+- Download resources from the internet
+
+## Agent-specific permissions
+
+You can configure permissions per agent. Agent-specific config overrides the global config.
+
+```json theme={null}
+{
+  "permission": {
+    "bash": {
+      "git push": "ask"
+    }
+  },
+  "agent": {
+    "build": {
+      "permission": {
+        "bash": {
+          "git push": "allow"
+        }
+      }
+    }
+  }
+}
+```
+
+For example, here the `build` agent overrides the global `bash` permission to allow `git push` commands.
+
+You can also configure permissions for agents in Markdown:
+
+```markdown theme={null}
+---
+description: Code review without edits
+mode: subagent
+permission:
+  edit: deny
+  bash: ask
+  webfetch: deny
+---
+
+Only analyze code and suggest changes.
+```
+
+## Configuration locations
+
+Permissions can be configured in several places:
+
+### Global configuration
+- **Location**: `~/.gammacode/config.json`
+- **Scope**: Applies to all projects
+
+### Project configuration
+- **Location**: `.gammacode/config.json`
+- **Scope**: Applies only to the current project
+- **Priority**: Overrides global configuration
+
+### Agent configuration
+- **Location**: `.gammacode/agent/agent-name.md` or `~/.gammacode/agent/agent-name.md`
+- **Scope**: Applies only when using that specific agent
+- **Priority**: Overrides both global and project configuration
+
+## Common permission patterns
+
+### Development workflow
+For active development work:
+
+```json theme={null}
+{
+  "permission": {
+    "edit": "allow",
+    "bash": {
+      "git status": "allow",
+      "git diff": "allow",
+      "git add": "allow",
+      "git commit": "ask",
+      "git push": "ask",
+      "npm test": "allow",
+      "npm run build": "allow"
+    },
+    "webfetch": "ask"
+  }
+}
+```
+
+### Code review workflow
+For reviewing code without making changes:
+
+```json theme={null}
+{
+  "permission": {
+    "edit": "deny",
+    "bash": {
+      "git *": "allow",
+      "npm test": "allow",
+      "*": "ask"
+    },
+    "webfetch": "allow"
+  }
+}
+```
+
+### Security-focused workflow
+For maximum security:
+
+```json theme={null}
+{
+  "permission": {
+    "edit": "ask",
+    "bash": {
+      "*": "ask"
+    },
+    "webfetch": "ask"
+  }
+}
+```
+
+### CI/CD workflow
+For automated environments:
+
+```json theme={null}
+{
+  "permission": {
+    "edit": "allow",
+    "bash": {
+      "git push": "deny",
+      "rm -rf": "deny",
+      "*": "allow"
+    },
+    "webfetch": "allow"
+  }
+}
+```
+
+## Best practices
+
+### Security considerations
+* **Start restrictive**: Begin with `"ask"` permissions and gradually allow specific operations as needed
+* **Limit destructive commands**: Always require approval for commands like `rm -rf`, `git push --force`, etc.
+* **Review regularly**: Periodically audit your permission settings to ensure they're still appropriate
+
+### Development efficiency
+* **Allow common operations**: Set frequently used, safe commands to `"allow"` to reduce interruptions
+* **Use wildcards wisely**: Group related commands with wildcards for easier management
+* **Agent-specific permissions**: Create specialized agents with appropriate permission levels
+
+### Team collaboration
+* **Document permissions**: Include permission rationale in your project documentation
+* **Consistent patterns**: Use similar permission patterns across team projects
+* **Project-specific overrides**: Use project config to handle unique security requirements
+
+## Troubleshooting
+
+### Permission denied errors
+If operations are unexpectedly blocked:
+
+1. Check your global configuration in `~/.gammacode/config.json`
+2. Check project configuration in `.gammacode/config.json`
+3. Check agent-specific permissions in agent markdown files
+4. Remember that more specific rules override general ones
+
+### Commands not working
+If bash commands aren't executing:
+
+1. Verify the command matches your permission pattern exactly
+2. Check for typos in command names or glob patterns
+3. Remember that `*` wildcards are greedy and match everything
+4. Test with `"bash": "ask"` to see all command requests
+
+### Agent permission conflicts
+If agent permissions aren't working as expected:
+
+1. Verify the agent is actually being used (check agent name in UI)
+2. Confirm agent configuration file syntax is correct
+3. Remember that agent permissions override global/project permissions
+4. Check that the agent mode is set correctly (`primary`, `subagent`, or `all`)
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Agents" icon="robot" href="/agents">
+    Learn about creating and configuring specialized AI agents with custom permissions
+  </Card>
+  
+  <Card title="Custom Commands" icon="command-line" href="/custom-commands">
+    Create custom commands for repetitive tasks with specific permission requirements
+  </Card>
+  
+  <Card title="Headless Mode" icon="terminal" href="/headless">
+    Learn how to run Gammacode programmatically with permission controls
+  </Card>
+  
+  <Card title="Development Workflows" icon="code" href="/development">
+    Step-by-step guides for common development tasks with security considerations
+  </Card>
+</CardGroup>

@@ -1,0 +1,305 @@
+> Quick actions and built-in commands for efficient development workflows.
+
+When using Gammacode, you can type `/` followed by a command name to quickly execute actions. Most commands also have keybinds using `ctrl+x` as the leader key.
+
+## Bash commands
+
+Start a message with `!` to run a shell command:
+
+```
+!ls -la
+```
+
+The output of the command is added to the conversation as a tool result, allowing you to discuss the results with Gammacode or use them for further analysis.
+
+**Examples:**
+```
+!git status
+!npm test
+!docker ps
+!cat package.json
+```
+
+## Available slash commands
+
+### /compact
+
+Compact the current session by summarizing previous conversations to save context space.
+
+```
+/compact
+```
+
+**Alias:** `/summarize`  
+**Keybind:** `ctrl+x c`
+
+This is useful when your conversation gets long and you want to preserve the important context while reducing token usage.
+
+### /details
+
+Toggle tool execution details on/off. When enabled, shows detailed information about tool usage and execution.
+
+```
+/details
+```
+
+**Keybind:** `ctrl+x d`
+
+Use this to see more verbose output about what tools Gammacode is using and how they're being executed.
+
+### /editor
+
+Open external editor for composing messages. Uses the editor set in your `EDITOR` environment variable.
+
+```
+/editor
+```
+
+**Keybind:** `ctrl+x e`
+
+This opens your preferred text editor for writing longer, more complex prompts or code snippets.
+
+### /exit
+
+Exit Gammacode.
+
+```
+/exit
+```
+
+**Aliases:** `/quit`, `/q`  
+**Keybind:** `ctrl+x q`
+
+### /export
+
+Export current conversation to Markdown and open in your default editor. Uses the editor set in your `EDITOR` environment variable.
+
+```
+/export
+```
+
+**Keybind:** `ctrl+x x`
+
+This is useful for saving conversations, creating documentation, or sharing your development process with others.
+
+### /help
+
+Show the help dialog with all available commands and keybinds.
+
+```
+/help
+```
+
+**Keybind:** `ctrl+x h`
+
+### /init
+
+Create or update the `AGENTS.md` file in your project. This file contains project-specific instructions that Gammacode will follow throughout your development workflow.
+
+```
+/init
+```
+
+**Keybind:** `ctrl+x i`
+
+The `/init` command analyzes your codebase and creates a project-specific `AGENTS.md` file containing build commands, code style guidelines, and project conventions.
+
+### /models
+
+List all available AI models that you can use with Gammacode.
+
+```
+/models
+```
+
+**Keybind:** `ctrl+x m`
+
+This shows you which models are available and allows you to switch between them for different tasks.
+
+### /new
+
+Start a new session, clearing the current conversation history.
+
+```
+/new
+```
+
+**Alias:** `/clear`  
+**Keybind:** `ctrl+x n`
+
+Use this when you want to start fresh with a new development task or conversation.
+
+### /redo
+
+Redo a previously undone message. Only available after using `/undo`.
+
+```
+/redo
+```
+
+**Keybind:** `ctrl+x r`
+
+<Tip>
+  Any file changes will also be restored. Internally, this uses Git to manage the file changes, so your project needs to be a Git repository.
+</Tip>
+
+### /sessions
+
+List and switch between active sessions, allowing you to manage multiple conversations.
+
+```
+/sessions
+```
+
+**Aliases:** `/resume`, `/continue`  
+**Keybind:** `ctrl+x l`
+
+This is useful when working on multiple features or projects simultaneously.
+
+
+
+### /undo
+
+Undo last message in the conversation. Removes the most recent user message, all subsequent responses, and any file changes.
+
+```
+/undo
+```
+
+**Keybind:** `ctrl+x u`
+
+<Tip>
+  Any file changes made will also be reverted. Internally, this uses Git to manage the file changes, so your project needs to be a Git repository.
+</Tip>
+
+## Command categories
+
+### Session management
+- `/new` - Start fresh conversation
+- `/sessions` - Switch between conversations  
+- `/compact` - Summarize to save context
+- `/export` - Save conversation to file
+
+### Development workflow
+- `/init` - Set up project configuration
+- `/undo` - Revert changes and messages
+- `/redo` - Restore undone changes
+- `!command` - Execute shell commands
+
+### Environment
+- `/models` - Switch AI models
+- `/editor` - Use external editor
+- `/details` - Toggle verbose output
+
+### Utility
+- `/help` - Show all commands
+- `/exit` - Quit Gammacode
+
+## Using keybinds
+
+Most slash commands have corresponding keybinds using `ctrl+x` as the leader key:
+
+1. Press and hold `ctrl+x`
+2. Release and press the command key (e.g., `h` for help)
+
+**Common keybind patterns:**
+- `ctrl+x h` - Help
+- `ctrl+x n` - New session  
+- `ctrl+x i` - Initialize project
+- `ctrl+x u` - Undo
+- `ctrl+x r` - Redo
+- `ctrl+x q` - Quit
+
+## Examples
+
+### Development workflow
+```
+# Check current git status
+!git status
+
+# Initialize project configuration
+/init
+
+# Work on your code...
+# Make a mistake? Undo it
+/undo
+
+# Continue working...
+# Need to switch models for a complex task?
+/models
+
+# Export your session for documentation
+/export
+```
+
+### Multi-session workflow
+```
+# Start working on feature A
+> "Let's implement user authentication"
+
+# Need to switch to urgent bugfix
+/new
+> "Fix the login timeout issue"
+
+# Switch back to feature work
+/sessions
+# Select the authentication session
+
+# Continue where you left off
+> "Now let's add password validation"
+```
+
+### Shell integration
+```
+# Check what files changed
+!git diff --name-only
+
+# Run tests
+!npm test
+
+# Check build status  
+!npm run build
+
+# Deploy if everything looks good
+!npm run deploy
+```
+
+## Best practices
+
+### Efficient command usage
+* Use keybinds for frequently used commands (`ctrl+x n` for new session)
+* Combine shell commands with conversation (`!ls` then discuss the files)
+* Use `/compact` regularly in long sessions to manage context
+* Export important conversations with `/export` for documentation
+
+### Session management
+* Use descriptive first messages for easy session identification
+* Switch between sessions with `/sessions` for different tasks
+* Start new sessions for unrelated topics
+* Use `/undo` freely - it's safe and reversible with `/redo`
+
+### Development workflow
+* Run `/init` in new projects to set up Gammacode configuration
+* Use shell commands (`!`) to check status, run tests, etc.
+* Combine `/undo` and `/redo` for safe experimentation
+* Toggle `/details` when you need to debug tool usage
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Custom Commands" icon="command-line" href="/custom-commands">
+    Create your own reusable slash commands for project-specific workflows
+  </Card>
+  
+  <Card title="Agents" icon="robot" href="/agents">
+    Learn about specialized AI agents that work with slash commands
+  </Card>
+  
+  <Card title="Development Workflows" icon="code" href="/development">
+    See how slash commands fit into common development patterns
+  </Card>
+  
+  <Card title="Permissions" icon="shield-check" href="/permissions">
+    Control what commands and tools can do in your project
+  </Card>
+</CardGroup>
