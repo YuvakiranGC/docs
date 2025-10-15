@@ -1,15 +1,7 @@
-/* BRCobane Font Family - All Weights and Styles */
+/* BRCobane Font Family - WOFF2 Format for Better Web Performance */
 @font-face {
   font-family: 'BRCobane';
-  src: url('./fonts/BRCobane-Thin-BF654d96a1a12ab.otf') format('opentype');
-  font-weight: 100;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'BRCobane';
-  src: url('./fonts/BRCobane-ThinItalic-BF654d96a1af71f.otf') format('opentype');
+  src: url('./fonts/BRCobane-ThinItalic-BF654d96a1af71f.woff2') format('woff2');
   font-weight: 100;
   font-style: italic;
   font-display: swap;
@@ -17,7 +9,7 @@
 
 @font-face {
   font-family: 'BRCobane';
-  src: url('./fonts/BRCobane-ExtraLight-BF654d96a18d26d.otf') format('opentype');
+  src: url('./fonts/BRCobane-ExtraLight-BF654d96a18d26d.woff2') format('woff2');
   font-weight: 200;
   font-style: normal;
   font-display: swap;
@@ -25,7 +17,7 @@
 
 @font-face {
   font-family: 'BRCobane';
-  src: url('./fonts/BRCobane-ExtraLightItalic-BF654d96a1a86be.otf') format('opentype');
+  src: url('./fonts/BRCobane-ExtraLightItalic-BF654d96a1a86be.woff2') format('woff2');
   font-weight: 200;
   font-style: italic;
   font-display: swap;
@@ -33,7 +25,7 @@
 
 @font-face {
   font-family: 'BRCobane';
-  src: url('./fonts/BRCobane-Light-BF654d96a18feed.otf') format('opentype');
+  src: url('./fonts/BRCobane-Light-BF654d96a18feed.woff2') format('woff2');
   font-weight: 300;
   font-style: normal;
   font-display: swap;
@@ -41,7 +33,7 @@
 
 @font-face {
   font-family: 'BRCobane';
-  src: url('./fonts/BRCobane-LightItalic-BF654d96a1a4bb7.otf') format('opentype');
+  src: url('./fonts/BRCobane-LightItalic-BF654d96a1a4bb7.woff2') format('woff2');
   font-weight: 300;
   font-style: italic;
   font-display: swap;
@@ -49,7 +41,7 @@
 
 @font-face {
   font-family: 'BRCobane';
-  src: url('./fonts/BRCobane-Regular-BF654d96a1718fa.otf') format('opentype');
+  src: url('./fonts/BRCobane-Regular-BF654d96a1718fa.woff2') format('woff2');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -57,7 +49,7 @@
 
 @font-face {
   font-family: 'BRCobane';
-  src: url('./fonts/BRCobane-RegularItalic-BF654d96a1a8637.otf') format('opentype');
+  src: url('./fonts/BRCobane-RegularItalic-BF654d96a1a8637.woff2') format('woff2');
   font-weight: 400;
   font-style: italic;
   font-display: swap;
@@ -65,7 +57,7 @@
 
 @font-face {
   font-family: 'BRCobane';
-  src: url('./fonts/BRCobane-Medium-BF654d96a174b64.otf') format('opentype');
+  src: url('./fonts/BRCobane-Medium-BF654d96a174b64.woff2') format('woff2');
   font-weight: 500;
   font-style: normal;
   font-display: swap;
@@ -73,7 +65,7 @@
 
 @font-face {
   font-family: 'BRCobane';
-  src: url('./fonts/BRCobane-MediumItalic-BF654d96a1936c3.otf') format('opentype');
+  src: url('./fonts/BRCobane-MediumItalic-BF654d96a1936c3.woff2') format('woff2');
   font-weight: 500;
   font-style: italic;
   font-display: swap;
@@ -81,23 +73,7 @@
 
 @font-face {
   font-family: 'BRCobane';
-  src: url('./fonts/BRCobane-SemiBold-BF654d96a192119.otf') format('opentype');
-  font-weight: 600;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'BRCobane';
-  src: url('./fonts/BRCobane-SemiBoldItalic-BF654d96a1af62d.otf') format('opentype');
-  font-weight: 600;
-  font-style: italic;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'BRCobane';
-  src: url('./fonts/BRCobane-Bold-BF654d96a1ac1b0.otf') format('opentype');
+  src: url('./fonts/BRCobane-Bold-BF654d96a1ac1b0.woff2') format('woff2');
   font-weight: 700;
   font-style: normal;
   font-display: swap;
@@ -105,7 +81,7 @@
 
 @font-face {
   font-family: 'BRCobane';
-  src: url('./fonts/BRCobane-BoldItalic-BF654d96a18bd54.otf') format('opentype');
+  src: url('./fonts/BRCobane-BoldItalic-BF654d96a18bd54.woff2') format('woff2');
   font-weight: 700;
   font-style: italic;
   font-display: swap;
@@ -113,7 +89,7 @@
 
 @font-face {
   font-family: 'BRCobane';
-  src: url('./fonts/BRCobane-Black-BF654d96a06ff37.otf') format('opentype');
+  src: url('./fonts/BRCobane-Black-BF654d96a06ff37.woff2') format('woff2');
   font-weight: 800;
   font-style: normal;
   font-display: swap;
@@ -121,7 +97,7 @@
 
 @font-face {
   font-family: 'BRCobane';
-  src: url('./fonts/BRCobane-BlackItalic-BF654d96a17ebab.otf') format('opentype');
+  src: url('./fonts/BRCobane-BlackItalic-BF654d96a17ebab.woff2') format('woff2');
   font-weight: 800;
   font-style: italic;
   font-display: swap;
