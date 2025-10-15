@@ -107,15 +107,17 @@
   },
   "footer": {
     "socials": {
-      "x": "https://x.com/gammacode",
+      "x": "https://x.com/gammacode_dev",
       "github": "https://github.com/gammacode",
-      "linkedin": "https://linkedin.com/company/gammacode"
+      "linkedin": "https://linkedin.com/company/gammacode",
+      "discord": "https://discord.gg/2mMstea8"
     }
   },
   "footerSocials": {
-    "x": "https://x.com/gammacode",
+    "x": "https://x.com/gammacode_dev",
     "github": "https://github.com/gammacode",
-    "linkedin": "https://linkedin.com/company/gammacode"
+    "linkedin": "https://linkedin.com/company/gammacode",
+    "discord": "https://discord.gg/2mMstea8"
   },
   "modeToggle": {
     "default": "light"
