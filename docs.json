@@ -1,22 +1,22 @@
 {
   "$schema": "https://mintlify.com/docs.json",
   "theme": "mint",
-  "name": "Mint Starter Kit",
+  "name": "Gammacode",
   "colors": {
-    "primary": "#16A34A",
-    "light": "#07C983",
-    "dark": "#15803D"
+    "primary": "#F17C65",
+    "light": "#F49481",
+    "dark": "#E85A42"
   },
   "favicon": "/favicon.svg",
   "navigation": {
     "tabs": [
       {
-        "tab": "Guides",
+        "tab": "Gammacode CLI",
         "groups": [
           {
             "group": "Getting started",
             "pages": [
-              "index",
+              "overview",
               "quickstart",
               "development"
             ]
@@ -48,7 +48,7 @@
         ]
       },
       {
-        "tab": "API reference",
+        "tab": "Issue Hunters",
         "groups": [
           {
             "group": "API documentation",
@@ -66,21 +66,21 @@
             ]
           }
         ]
+      },
+      {
+        "tab": "Runners",
+        "groups": [
+          {
+            "group": "Getting started",
+            "pages": [
+              "runners/overview"
+            ]
+          }
+        ]
       }
     ],
     "global": {
-      "anchors": [
-        {
-          "anchor": "Documentation",
-          "href": "https://mintlify.com/docs",
-          "icon": "book-open-cover"
-        },
-        {
-          "anchor": "Blog",
-          "href": "https://mintlify.com/blog",
-          "icon": "newspaper"
-        }
-      ]
+      "anchors": []
     }
   },
   "logo": {

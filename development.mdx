@@ -1,94 +1,348 @@
 ---
-title: 'Development'
-description: 'Preview changes locally to update your docs'
+title: 'Development Workflows'
+description: 'Set up your local development environment and integrate Gammacode into your workflow'
 ---
 
-<Info>
-  **Prerequisites**:
-  - Node.js version 19 or higher
-  - A docs repository with a `docs.json` file
-</Info>
+> Learn how to set up and optimize your development environment for maximum productivity with Gammacode.
 
-Follow these steps to install and run Mintlify on your operating system.
+## Setting up your environment
+
+### Install Gammacode
+
+Get Gammacode installed and ready for development:
 
 <Steps>
-<Step title="Install the Mintlify CLI">
+  <Step title="Install Gammacode">
+    **Mac & Linux:**
+    ```bash
+    curl -fsSL https://gammacode.dev/install | bash
+    ```
+    
+    **Windows PowerShell:**
+    ```powershell
+    Invoke-WebRequest -Uri https://gammacode.dev/install.ps1 -OutFile install.ps1; .\install.ps1
+    ```
+    
+    **Windows PowerShell:**
+    ```powershell theme={null}
+    Invoke-WebRequest -Uri https://gammacode.dev/install.ps1 -OutFile install.ps1; .\install.ps1
+    ```
+  </Step>
 
-```bash
-npm i -g mint
-```
-</Step>
+  <Step title="Verify installation">
+    ```bash
+    gammacode --version
+    ```
+    This checks that Gammacode is properly installed and shows the version.
+  </Step>
 
-<Step title="Preview locally">
-
-Navigate to your docs directory where your `docs.json` file is located, and run the following command:
-
-```bash
-mint dev
-```
-
-A local preview of your documentation will be available at `http://localhost:3000`.
-
-</Step>
+  <Step title="Authenticate if needed">
+    ```bash
+    gammacode login
+    ```
+    Follow the browser authentication flow to connect your account.
+  </Step>
 </Steps>
 
-## Custom ports
+## Development environment integration
 
-By default, Mintlify uses port 3000. You can customize the port Mintlify runs on by using the `--port` flag. For example, to run Mintlify on port 3333, use this command:
+### IDE setup and extensions
+
+Optimize your editor for the best Gammacode experience:
+
+**VS Code recommendations:**
+- Install language-specific extensions for syntax highlighting
+- Configure auto-save for seamless Gammacode file monitoring
+- Set up integrated terminal for easy Gammacode access
+
+**Terminal setup:**
+```bash
+# Add Gammacode to your shell profile for easy access
+echo 'alias gc="gammacode"' >> ~/.bashrc  # or ~/.zshrc
+source ~/.bashrc  # or ~/.zshrc
+```
+
+### Project initialization workflow
+
+Set up new projects with Gammacode:
+
+<Steps>
+  <Step title="Navigate to your project">
+    ```bash
+    cd /path/to/your/project
+    ```
+  </Step>
+
+  <Step title="Initialize Gammacode context">
+    ```bash
+    gammacode
+    ```
+    ```
+    > analyze this project structure and suggest a development workflow
+    ```
+  </Step>
+
+  <Step title="Set up project-specific configuration">
+    ```
+    > /init
+    ```
+    This creates an `Agents.MD` file where you can add project-specific instructions that Gammacode will follow throughout your development workflow.
+  </Step>
+</Steps>
+
+## Daily development workflows
+
+### Morning startup routine
+
+Start your development day efficiently:
 
 ```bash
-mint dev --port 3333
+# Check Gammacode status
+gammacode status
+
+# Start your main development session
+gammacode
 ```
 
-If you attempt to run Mintlify on a port that's already in use, it will use the next available port:
-
-```md
-Port 3000 is already in use. Trying 3001 instead.
+```
+> what did I work on yesterday?
+> show me any changes since my last session
+> what should I focus on today?
 ```
 
-## Mintlify versions
+### Code review and quality workflow
 
-Please note that each CLI release is associated with a specific version of Mintlify. If your local preview does not align with the production version, please update the CLI:
+Integrate Gammacode into your quality assurance process:
 
-```bash
-npm mint update
+<Steps>
+  <Step title="Pre-commit review">
+    ```
+    > review my staged changes for any issues
+    ```
+  </Step>
+
+  <Step title="Code quality check">
+    ```
+    > check for code smells and suggest improvements
+    ```
+  </Step>
+
+  <Step title="Security review">
+    ```
+    > scan my changes for potential security vulnerabilities
+    ```
+  </Step>
+
+  <Step title="Performance analysis">
+    ```
+    > analyze performance implications of my changes
+    ```
+  </Step>
+</Steps>
+
+### Collaborative development
+
+Work effectively with your team using Gammacode:
+
+**Branch management:**
+```
+> create a feature branch for user authentication improvements
+> help me merge this feature branch safely
 ```
 
-## Validating links
-
-The CLI can assist with validating links in your documentation. To identify any broken links, use the following command:
-
-```bash
-mint broken-links
+**Documentation workflow:**
+```
+> update documentation for the changes I made
+> generate API documentation for the new endpoints
 ```
 
-## Deployment
+**Code handoff:**
+```
+> create a summary of my changes for the next developer
+> explain how to continue this feature implementation
+```
 
-If the deployment is successful, you should see the following:
+## Advanced development patterns
 
-<Frame>
-  <img src="/images/checks-passed.png" alt="Screenshot of a deployment confirmation message that says All checks have passed." style={{ borderRadius: '0.5rem' }} />
-</Frame>
+### Automated workflows
 
-## Code formatting
+Integrate Gammacode into your automation:
 
-We suggest using extensions on your IDE to recognize and format MDX. If you're a VSCode user, consider the [MDX VSCode extension](https://marketplace.visualstudio.com/items?itemName=unifiedjs.vscode-mdx) for syntax highlighting, and [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode) for code formatting.
+**Git hooks with Gammacode:**
+```bash theme={null}
+# Pre-commit hook example
+#!/bin/sh
+gammacode run "review staged changes and flag any issues" --output-format text
+```
 
-## Troubleshooting
+**CI/CD integration:**
+```bash theme={null}
+# In your CI pipeline
+gammacode run "analyze test coverage and suggest improvements" --output-format json > coverage-analysis.json
+```
 
-<AccordionGroup>
-  <Accordion title='Error: Could not load the "sharp" module using the darwin-arm64 runtime'>
+### Multi-project workflows
 
-    This may be due to an outdated version of node. Try the following:
-    1. Remove the currently-installed version of the CLI: `npm remove -g mint`
-    2. Upgrade to Node v19 or higher.
-    3. Reinstall the CLI: `npm i -g mint`
-  </Accordion>
+Manage multiple projects efficiently:
 
-  <Accordion title="Issue: Encountering an unknown error">
+<Steps>
+  <Step title="Project switching">
+    ```bash theme={null}
+    # Quick project switch with context
+    cd ../other-project && gammacode run --continue "switch context to this project"
+    ```
+  </Step>
+
+  <Step title="Cross-project analysis">
+    ```
+    > compare the architecture of this project with /path/to/other/project
+    ```
+  </Step>
+
+  <Step title="Shared workflow patterns">
+    ```
+    > help me standardize development practices across my projects
+    ```
+  </Step>
+</Steps>
+
+## Troubleshooting development issues
+
+### Common workflow problems
+
+**Authentication issues:**
+```bash theme={null}
+# Check status
+gammacode status
+
+# Re-authenticate if needed
+gammacode logout && gammacode login
+```
+
+**Performance optimization:**
+```bash theme={null}
+# Check available models
+gammacode models
+
+# Upgrade to latest version
+gammacode upgrade
+```
+
+**Context management:**
+```
+> clear conversation history but keep project context
+> reset to a clean development state
+```
+
+### Debug workflow problems
+
+When Gammacode isn't working as expected:
+
+<Steps>
+  <Step title="Check system status">
+    ```bash theme={null}
+    gammacode status
+    ```
+  </Step>
+
+  <Step title="Verify project context">
+    ```
+    > what files and directories can you see in this project?
+    ```
+  </Step>
+
+  <Step title="Reset if needed">
+    ```bash theme={null}
+    gammacode logout
+    gammacode login
+    ```
+  </Step>
+</Steps>
+
+## Best practices for development workflows
+
+### Efficient communication patterns
+
+**Be specific in your requests:**
+```
+❌ "fix the bug"
+✅ "fix the null pointer exception in UserService.authenticate() method"
+```
+
+**Provide context:**
+```
+❌ "add tests"
+✅ "add unit tests for the new authentication methods, focusing on edge cases and error handling"
+```
+
+**Use iterative development:**
+```
+> create a basic user registration form
+> add email validation to the registration form
+> add password strength requirements
+```
+
+### Project organization
+
+**Keep conversations organized:**
+- Use descriptive conversation starters
+- Group related tasks in single sessions
+- Use `gammacode run --resume` to return to specific topics
+
+**Maintain clean project structure:**
+```
+> analyze our project structure and suggest improvements
+> help organize these utility functions into logical modules
+```
+
+## Integration with development tools
+
+### Version control integration
+
+```bash theme={null}
+# Commit with AI-generated messages
+gammacode run "create a commit message for my staged changes"
+
+# Branch management
+gammacode run "suggest a good branch name for this feature"
+```
+
+### Testing integration
+
+```bash theme={null}
+# Test-driven development
+gammacode run "help me write tests before implementing this feature"
+
+# Test analysis
+gammacode run "analyze test coverage and suggest additional test cases"
+```
+
+### Documentation integration
+
+```bash theme={null}
+# Keep docs updated
+gammacode run "update README with the new feature documentation"
+
+# API documentation
+gammacode run "generate API documentation for the new endpoints"
+```
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Developer Workflows" icon="code" href="/developer-workflows">
+    Explore advanced development patterns and workflows
+  </Card>
   
-    Solution: Go to the root of your device and delete the `~/.mintlify` folder. Then run `mint dev` again.
-  </Accordion>
-</AccordionGroup>
-
-Curious about what changed in the latest CLI version? Check out the [CLI changelog](https://www.npmjs.com/package/mintlify?activeTab=versions).
+  <Card title="CLI Reference" icon="terminal" href="/en/docs/gammacode/cli-reference">
+    Complete command reference and options
+  </Card>
+  
+  <Card title="Configuration" icon="gear" href="/en/docs/gammacode/settings">
+    Customize Gammacode for your workflow
+  </Card>
+  
+  <Card title="Troubleshooting" icon="wrench" href="/en/docs/gammacode/troubleshooting">
+    Solutions for common development issues
+  </Card>
+</CardGroup>

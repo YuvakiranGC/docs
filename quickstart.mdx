@@ -1,80 +1,213 @@
 ---
 title: "Quickstart"
-description: "Start building awesome documentation in minutes"
+description: "Get started with Gammacode in just a few minutes and experience AI-powered coding assistance"
 ---
 
-## Get started in three steps
+> Welcome to Gammacode! This guide will help you start using our AI-powered coding assistant in minutes. You'll learn the basics and try your first development tasks with Gammacode.
 
-Get your documentation site running locally and make your first customization.
+## What you'll need
 
-### Step 1: Set up your local environment
+Before starting, make sure you have:
+* A terminal or command prompt
+* A coding project to work with
+* A [Gammacode](https://gammacode.dev) account (free to create)
 
-<AccordionGroup>
-  <Accordion icon="copy" title="Clone your docs locally">
-    During the onboarding process, you created a GitHub repository with your docs content if you didn't already have one. You can find a link to this repository in your [dashboard](https://dashboard.mintlify.com).
-    
-    To clone the repository locally so that you can make and preview changes to your docs, follow the [Cloning a repository](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository) guide in the GitHub docs.
-  </Accordion>
-  <Accordion icon="rectangle-terminal" title="Start the preview server">
-    1. Install the Mintlify CLI: `npm i -g mint`
-    2. Navigate to your docs directory and run: `mint dev`
-    3. Open `http://localhost:3000` to see your docs live!
-    
-    <Tip>Your preview updates automatically as you edit files.</Tip>
-  </Accordion>
-</AccordionGroup>
+## Installation
 
-### Step 2: Deploy your changes
+**Mac & Linux:**
+```bash theme={null}
+curl -fsSL https://gammacode.dev/install | bash
+```
 
-<AccordionGroup>
-  <Accordion icon="github" title="Install our GitHub app">
-    Install the Mintlify GitHub app from your [dashboard](https://dashboard.mintlify.com/settings/organization/github-app).
-    
-    Our GitHub app automatically deploys your changes to your docs site, so you don't need to manage deployments yourself.
-</Accordion>
-<Accordion icon="palette" title="Update your site name and colors">
-    For a first change, let's update the name and colors of your docs site.
+**Windows PowerShell:**
+```powershell theme={null}
+Invoke-WebRequest -Uri https://gammacode.dev/install.ps1 -OutFile install.ps1; .\install.ps1
+```
 
-    1. Open `docs.json` in your editor.
-    2. Change the `"name"` field to your project name.
-    3. Update the `"colors"` to match your brand.
-    4. Save and see your changes instantly at `http://localhost:3000`.
+## Authentication
 
-    <Tip>Try changing the primary color to see an immediate difference!</Tip>
-  </Accordion>
-</AccordionGroup>
+Start Gammacode in any project directory:
 
-### Step 3: Go live
+```bash theme={null}
+cd /your/project/folder
+gammacode
+```
 
-<Accordion icon="rocket" title="Publish your docs">
-  1. Commit and push your changes.
-  2. Your docs will update and be live in moments!
-</Accordion>
-
-## Next steps
-
-Now that you have your docs running, explore these key features:
-
-<CardGroup cols={2}>
-
-<Card title="Write Content" icon="pen-to-square" href="/essentials/markdown">
-  Learn MDX syntax and start writing your documentation.
-</Card>
-
-<Card title="Customize style" icon="palette" href="/essentials/settings">
-  Make your docs match your brand perfectly.
-</Card>
-
-<Card title="Add code examples" icon="square-code" href="/essentials/code">
-  Include syntax-highlighted code blocks.
-</Card>
-
-<Card title="API documentation" icon="code" href="/api-reference/introduction">
-  Auto-generate API docs from OpenAPI specs.
-</Card>
-
-</CardGroup>
+If you're not authenticated, Gammacode will prompt you to log in:
+1. A web browser will open to the Gammacode authentication page
+2. Log in to your Gammacode account
+3. Click "Authorize Gammacode CLI" to complete the setup
 
 <Note>
-  **Need help?** See our [full documentation](https://mintlify.com/docs) or join our [community](https://mintlify.com/community).
+Once authenticated, your credentials are saved locally. You won't need to authenticate again unless you explicitly log out.
+</Note>
+
+## Your first conversation
+
+After authentication, you'll see the Gammacode welcome screen. Let's start with understanding your project:
+
+```
+> what does this project do?
+```
+
+Gammacode will analyze your files and provide a helpful summary. Try asking more questions:
+
+```
+> what programming languages are used here?
+```
+
+```
+> show me the main files and folders
+```
+
+```
+> what can Gammacode help me with?
+```
+
+<Tip>
+Gammacode automatically reads your project files as needed. You don't have to manually provide context or upload files.
+</Tip>
+
+## Make your first code change
+
+Let's have Gammacode write some code. Try a simple request:
+
+```
+> add a hello world function to my main file
+```
+
+Gammacode will:
+1. Identify the right file to modify
+2. Show you the proposed changes
+3. Ask for your permission before making edits
+4. Apply the changes once you approve
+
+## Working with Git
+
+Gammacode makes Git operations conversational and simple:
+
+```
+> what files have changed?
+```
+
+```
+> commit my changes with a good commit message
+```
+
+```
+> create a new branch for this feature
+```
+
+## Common development tasks
+
+Try these typical coding scenarios:
+
+**Fix bugs:**
+```
+> there's an error when users submit empty forms - fix it
+```
+
+**Add features:**
+```
+> add email validation to the registration form
+```
+
+**Refactor code:**
+```
+> make this function more readable and add error handling
+```
+
+**Write tests:**
+```
+> create unit tests for the authentication functions
+```
+
+**Code review:**
+```
+> review my recent changes and suggest improvements
+```
+
+## Essential commands
+
+| Command | Description | Example |
+|---------|-------------|---------|
+| `gammacode` | Start interactive session | `gammacode` |
+| `gammacode run "task"` | Run Gammacode with a message | `gammacode run "fix linting errors"` |
+| `gammacode login` | Authenticate with Gammacode | `gammacode login` |
+| `gammacode logout` | Sign out from Gammacode | `gammacode logout` |
+| `gammacode status` | Check authentication status | `gammacode status` |
+| `gammacode models` | List all available models | `gammacode models` |
+| `gammacode upgrade` | Upgrade to latest version | `gammacode upgrade` |
+
+## Tips for better results
+
+<AccordionGroup>
+  <Accordion title="Be specific about what you want">
+    Instead of: "fix the bug"
+    
+    Try: "fix the login issue where users see a blank page after entering incorrect credentials"
+  </Accordion>
+  
+  <Accordion title="Break down complex tasks">
+    For large features, work step by step:
+    
+    ```
+    > create a user profile database table
+    ```
+    
+    Then:
+    ```
+    > build an API to update user profiles
+    ```
+    
+    Finally:
+    ```
+    > create a frontend form for profile editing
+    ```
+  </Accordion>
+  
+  <Accordion title="Let Gammacode explore first">
+    Before making changes, let Gammacode understand your code:
+    
+    ```
+    > analyze the current authentication system
+    ```
+    
+    Then request changes:
+    ```
+    > add two-factor authentication to the login process
+    ```
+  </Accordion>
+</AccordionGroup>
+
+## What's next?
+
+Now that you've learned the basics, explore advanced features:
+
+<CardGroup cols={2}>
+  <Card title="Common Workflows" icon="graduation-cap" href="/en/docs/gammacode/common-workflows">
+    Step-by-step guides for typical development tasks
+  </Card>
+  
+  <Card title="CLI Reference" icon="terminal" href="/en/docs/gammacode/cli-reference">
+    Complete command reference and options
+  </Card>
+  
+  <Card title="Configuration" icon="gear" href="/en/docs/gammacode/settings">
+    Customize Gammacode for your workflow
+  </Card>
+  
+  <Card title="IDE Integration" icon="laptop" href="/en/docs/gammacode/ide-integrations">
+    Use Gammacode with your favorite editor
+  </Card>
+</CardGroup>
+
+## Need help?
+
+* **In Gammacode**: Type `help` or ask "how do I..."
+* **Documentation**: Browse our guides and references
+* **Community**: Join our [Discord](https://discord.gg/gammacode) for tips and support
+
+<Note>
+Remember: Gammacode is your AI coding partner. Describe what you want to achieve in natural language, and it will help you get there efficiently.
 </Note>

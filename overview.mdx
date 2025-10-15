@@ -1,0 +1,95 @@
+---
+title: "Overview"
+description: "Learn about Gammacode, an Agentic CLI and Autonomous coding agent that helps SMBs and developers boost their productivity"
+---
+
+## Quick setup in under a minute
+
+**What you'll need:**
+* A [Gammacode](https://gammacode.dev) account (free to start)
+
+```bash theme={null}
+# Install Gammacode (Mac/Linux)
+curl -fsSL https://gammacode.dev/install | bash
+
+# Go to your project directory
+cd your-project-folder
+
+# Launch Gammacode
+gammacode
+# First-time users will be guided through authentication
+```
+
+```powershell theme={null}
+# Install Gammacode (Windows - if bash is not available)
+Invoke-WebRequest -Uri https://gammacode.dev/install.ps1 -OutFile install.ps1; .\install.ps1
+
+# Go to your project directory
+cd your-project-folder
+
+# Launch Gammacode
+gammacode
+# First-time users will be guided through authentication
+```
+
+You're all set! Ready to boost your coding productivity. [Jump to the Quickstart guide →](/quickstart)
+
+(Need help with installation or encountering issues? Check our [setup guide](/en/docs/gammacode/setup) or [troubleshooting docs](/en/docs/gammacode/troubleshooting).)
+
+<Note>
+  **VS Code Extension Available**: Want a visual interface? Try our [VS Code extension](/en/docs/gammacode/vs-code) for a seamless IDE experience. Install it from the marketplace and access Gammacode through your editor's sidebar.
+</Note>
+
+## How Gammacode accelerates your workflow
+
+* **Transform ideas into working code**: Describe your feature requirements in natural language. Gammacode creates implementation plans, writes the necessary code, and validates functionality.
+* **Intelligent error resolution**: Share error messages or describe unexpected behavior. Gammacode examines your codebase, pinpoints root causes, and delivers working solutions.
+* **Smart codebase exploration**: Get instant insights about any part of your project. Gammacode understands your entire codebase structure and can integrate external data sources through [MCP](/en/docs/gammacode/mcp) connections to tools like Google Drive, Figma, and Slack.
+* **Streamline routine development tasks**: Eliminate time-consuming activities like fixing linting errors, resolving merge conflicts, and generating release documentation. Execute these tasks with simple commands or integrate them into your CI pipeline.
+
+## What makes Gammacode different
+
+* **Terminal-native experience**: No switching between applications or learning new interfaces. Gammacode integrates seamlessly with your existing development environment and workflow.
+* **Direct code manipulation**: Beyond suggestions, Gammacode actively modifies files, executes commands, and creates commits. Extend capabilities with [MCP](/en/docs/gammacode/mcp) to access design documents, manage tickets, or integrate with your custom toolchain.
+* **Command-line composability**: Built for automation and scripting. Commands like `tail -f app.log | gammacode -p "Alert me about any errors in this stream"` work naturally. Integrate into CI with instructions like `gammacode -p "Translate new strings to Spanish and create a review PR"`.
+* **Production-ready architecture**: Deploy using Gammacode API or host on major cloud platforms. Built-in [security](/en/docs/gammacode/security), [privacy protection](/en/docs/gammacode/data-usage), and [compliance standards](https://trust.gammacode.dev/) for enterprise use.
+
+## Next steps
+
+<CardGroup>
+  <Card title="Quickstart" icon="rocket" href="/quickstart">
+    See Gammacode in action with practical examples
+  </Card>
+  <Card title="Common workflows" icon="graduation-cap" href="/en/docs/gammacode/common-workflows">
+    Step-by-step guides for common workflows
+  </Card>
+  <Card title="Troubleshooting" icon="wrench" href="/en/docs/gammacode/troubleshooting">
+    Solutions for common issues with Gammacode
+  </Card>
+  <Card title="IDE setup" icon="laptop" href="/en/docs/gammacode/ide-integrations">
+    Add Gammacode to your IDE
+  </Card>
+</CardGroup>
+
+## Additional resources
+
+<CardGroup>
+  <Card title="Host on AWS or GCP" icon="cloud" href="/en/docs/gammacode/third-party-integrations">
+    Configure Gammacode with Amazon Bedrock or Google Vertex AI
+  </Card>
+  <Card title="Settings" icon="gear" href="/en/docs/gammacode/settings">
+    Customize Gammacode for your workflow
+  </Card>
+  <Card title="Commands" icon="terminal" href="/en/docs/gammacode/cli-reference">
+    Learn about CLI commands and controls
+  </Card>
+  <Card title="Reference implementation" icon="code" href="https://github.com/gammacode/gammacode/tree/main/.devcontainer">
+    Clone our development container reference implementation
+  </Card>
+  <Card title="Security" icon="shield" href="/en/docs/gammacode/security">
+    Discover Gammacode's safeguards and best practices for safe usage
+  </Card>
+  <Card title="Privacy and data usage" icon="lock" href="/en/docs/gammacode/data-usage">
+    Understand how Gammacode handles your data
+  </Card>
+</CardGroup>
