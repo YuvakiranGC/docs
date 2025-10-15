@@ -1,76 +1,162 @@
 ---
 title: "Runners"
-description: "Automated CI/CD workflows and development task execution powered by AI"
+description: "Autonomous coding agents that integrate with Slack and Teams to help fix bugs, implement features, and reduce tech debt"
 ---
 
 # Runners
 
-> Runners provide intelligent automation for your development workflows, handling CI/CD pipelines, testing, deployments, and repetitive development tasks.
+> Runners are autonomous AI coding agents that integrate seamlessly with your team communication tools like Slack and Microsoft Teams, enabling non-technical team members to directly request code changes, bug fixes, and feature implementations.
 
 ## What are Runners?
 
-Runners are AI-powered automation environments that execute your development workflows:
+Runners are autonomous coding agents that bridge the gap between technical and non-technical teams:
 
-- **CI/CD Pipelines** - Automated testing, building, and deployment
-- **Code Quality Checks** - Automated linting, formatting, and quality analysis  
-- **Security Scans** - Automated security testing and vulnerability detection
-- **Performance Testing** - Load testing and performance benchmarking
-- **Dependency Management** - Automated package updates and security patches
+- **Team Integration** - Connect directly with Slack, Microsoft Teams, and other communication platforms
+- **Autonomous Development** - Independently clone repos, write code, create branches, and submit PRs
+- **Secure Sandbox Environment** - All work happens in isolated cloud environments
+- **Non-Technical Friendly** - Customer success, product managers, and support teams can directly request fixes
+- **Scalable Support** - Handle multiple requests simultaneously without overwhelming dev teams
 
-## Key Features
+## How Runners Work
 
-### Intelligent Automation
-- **Smart Execution** - AI optimizes workflow execution and resource usage
-- **Failure Recovery** - Automatic retry logic and intelligent error handling
-- **Context Awareness** - Understands your codebase and adapts workflows accordingly
+### 1. Team Integration Setup
+- **Connect to Slack/Teams** - Simple integration with your existing communication channels
+- **Repository Access** - Secure connection to your code repositories
+- **Team Permissions** - Configure who can request what types of changes
+- **Notification Settings** - Customize how and when teams get updates
 
-### Flexible Configuration  
-- **YAML-based Setup** - Simple configuration for complex workflows
-- **Multi-environment Support** - Dev, staging, and production environments
-- **Custom Triggers** - Git events, schedules, API calls, and more
+### 2. Request Processing
+- **Natural Language Requests** - Team members describe issues in plain English
+- **Context Understanding** - Runners analyze attached documents, screenshots, and descriptions
+- **Automatic Prioritization** - Intelligent routing based on urgency and complexity
+- **Progress Tracking** - Real-time updates on work status
+
+### 3. Autonomous Development
+- **Secure Repository Cloning** - Work happens in isolated cloud sandboxes
+- **Intelligent Code Analysis** - Understand existing codebase and patterns
+- **Feature Implementation** - Write production-ready code following best practices
+- **Quality Assurance** - Automated testing and code quality checks
+- **Pull Request Creation** - Submit changes for team review
+
+## Real-World Scenarios
+
+### Scenario 1: Customer Support Bug Escalation
+**The Challenge:**
+Company A's customer support team receives dozens of bug reports daily. Their small dev team is overwhelmed with feature work and can't address customer issues quickly enough, leading to frustrated customers and escalating support tickets.
+
+**With Runners:**
+- Customer support tags `@GammacodeRunner` in Slack with bug details and customer screenshots
+- Runner clones the repository in a secure sandbox environment
+- Analyzes the issue, identifies the root cause, and implements a fix
+- Creates a new branch `fix/customer-login-timeout` and submits a PR
+- Notifies both support and dev teams when the fix is ready for review
+- **Result:** Customer issues resolved in hours instead of weeks, dev team stays focused on features
+
+### Scenario 2: Product Manager Feature Requests
+**The Challenge:**
+Company B's product manager has great feature ideas based on user feedback, but struggles to communicate technical requirements to developers. The back-and-forth clarification process delays feature delivery and creates frustration on both sides.
+
+**With Runners:**
+- Product manager describes new feature in Teams: "Users want to export their data as PDF reports with company branding"
+- Attaches mockups, user feedback, and requirements document
+- Runner analyzes requirements, asks clarifying questions if needed
+- Implements the PDF export feature with proper styling and branding
+- Creates comprehensive tests and documentation
+- **Result:** Features go from idea to implementation without lengthy requirement translation phases
+
+### Scenario 3: Technical Debt and Maintenance
+**The Challenge:**
+Company C has accumulated significant technical debt - outdated dependencies, deprecated APIs, and performance issues. The dev team knows these need fixing but always prioritizes new features for business growth.
+
+**With Runners:**
+- DevOps team schedules regular maintenance requests: "Update all Node.js dependencies to latest stable versions"
+- Runner systematically updates dependencies, tests for breaking changes
+- Fixes compatibility issues and updates related code
+- Runs full test suite and performance benchmarks
+- Creates detailed PR with change summary and impact analysis
+- **Result:** Technical debt gets addressed consistently without taking dev time away from features
+
+### Scenario 4: Urgent Production Hotfixes
+**The Challenge:**
+Company D experiences a critical production issue during off-hours. The on-call developer is unavailable, and the issue is affecting key customers. Non-technical team members can identify the problem but can't implement fixes.
+
+**With Runners:**
+- Operations manager tags `@GammacodeRunner` in emergency Slack channel
+- Provides error logs, affected user reports, and system monitoring screenshots  
+- Runner immediately analyzes the issue, identifies it as a rate limiting problem
+- Implements a hotfix with proper rate limiting and error handling
+- Deploys to staging for validation, then creates production-ready PR
+- **Result:** Critical issues get immediate attention even when dev team is unavailable
+
+## Key Benefits
+
+### For Non-Technical Teams
+- **Direct Problem Resolution** - No need to wait for developer availability
+- **Clear Communication** - Describe issues in natural language
+- **Faster Response Times** - Issues addressed within hours, not days
+- **Reduced Friction** - Eliminate back-and-forth requirement clarification
+
+### For Development Teams  
+- **Focus on Core Work** - Less interruption from bug reports and small fixes
+- **Better Code Quality** - Runners follow best practices and include tests
+- **Comprehensive Documentation** - All changes come with clear explanations
+- **Scalable Support** - Handle more requests without growing team size
+
+### For Organizations
+- **Improved Customer Satisfaction** - Faster issue resolution
+- **Increased Productivity** - All teams can contribute to code improvements
+- **Reduced Bottlenecks** - Less dependency on limited developer time
+- **Better Resource Utilization** - Tech debt and maintenance get proper attention
+
+## Integration Capabilities
+
+### Communication Platforms
+- **Slack** - Full integration with channels, threads, and notifications
+- **Microsoft Teams** - Native bot support with file sharing
+- **Discord** - Community and team server support
+- **Custom Webhooks** - Integrate with any platform via API
+
+### Development Tools
+- **Version Control** - GitHub, GitLab, Bitbucket, Azure DevOps
+- **Project Management** - Jira, Linear, Asana, Trello integration
+- **CI/CD Pipelines** - Automatic testing and deployment triggers
+- **Code Quality** - ESLint, Prettier, SonarQube integration
+
+## Security & Compliance
+
+### Secure Development Environment
+- **Isolated Sandboxes** - Each request runs in completely isolated environment
+- **No Persistent Access** - Temporary repository access for each task
+- **Encrypted Communication** - All data transfer uses enterprise-grade encryption
+- **Audit Logging** - Complete trail of all actions and changes
 
 ### Enterprise Ready
-- **Scalable Infrastructure** - Handles projects of any size
-- **Security First** - Secure execution environments and secret management
-- **Compliance Support** - SOC 2, GDPR, and industry standard compliance
-
-## Use Cases
-
-**Development Teams:**
-- Automated testing on every pull request
-- Code quality enforcement and formatting
-- Automated dependency updates and security patches
-
-**DevOps Teams:**
-- Multi-environment deployment pipelines
-- Infrastructure as code deployment
-- Monitoring and alerting automation
-
-**Security Teams:**
-- Automated security scanning and compliance checks
-- Vulnerability management and remediation
-- Security policy enforcement
+- **SOC 2 Compliance** - Meets enterprise security standards
+- **Role-Based Access** - Granular permissions for different team members
+- **Integration Security** - Secure OAuth connections to all platforms
+- **Data Privacy** - Code never stored beyond task completion
 
 ## Request Access
 
-Runners are currently in private beta. Join the waitlist to get early access to powerful workflow automation.
+Runners are currently in private beta with select enterprise customers.
 
 <Card
   title="Request Runners Access"
   icon="rocket"
   href="https://gammacode.dev/runners/request"
 >
-  Get early access to AI-powered workflow automation. Join our private beta program.
+  Join our private beta program and transform how your team handles development requests. Perfect for growing companies with limited dev resources.
 </Card>
 
 ## Coming Soon
 
-- **Visual Workflow Builder** - Drag-and-drop workflow creation
-- **Marketplace** - Pre-built workflows for common development tasks
-- **Advanced Analytics** - Detailed workflow performance and optimization insights
-- **Enterprise Features** - Advanced security, compliance, and team management
+- **Visual Workflow Builder** - Configure complex multi-step development processes
+- **Advanced Analytics** - Track team productivity and request patterns
+- **Custom Agent Training** - Train Runners on your specific codebase patterns
+- **Enterprise SSO** - Single sign-on integration for large organizations
+- **Multi-Repository Projects** - Handle complex changes across multiple codebases
 
-Stay tuned for updates on Runners availability and new features.
+Transform your team's relationship with code - let non-technical team members directly contribute to development while keeping your developers focused on what matters most.
 
 ## Next Steps
 
